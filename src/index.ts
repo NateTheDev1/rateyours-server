@@ -9,8 +9,8 @@ import dotenv from 'dotenv';
 import { logger } from './utils/logger';
 import { createServer } from 'http';
 import { initializeMiddleware } from './services/MiddlewareService';
-import { typeDefs } from './schema';
 import { createContext } from './services/ContextService';
+import { typeDefs } from './schema';
 
 dotenv.config();
 
