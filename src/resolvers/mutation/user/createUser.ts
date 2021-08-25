@@ -27,7 +27,8 @@ export const createUser: Resolvers.MutationResolvers['createUser'] = async (
 
 	const created = await User.query().insertAndFetch({
 		...args.user,
-		password: await authService.hashPassword()
+		password: await authService.hashPassword(),
+		accountType: 'default'
 	});
 
 	context.session = {
