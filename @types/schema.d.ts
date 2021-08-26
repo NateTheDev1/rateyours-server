@@ -12,6 +12,22 @@ interface Scalars {
   Float: number;
 }
 
+interface AddCategoryInput {
+  title: Scalars['String'];
+  iconKey?: Maybe<Scalars['String']>;
+  caption: Scalars['String'];
+  approved: Scalars['Boolean'];
+}
+
+interface Category {
+  __typename?: 'Category';
+  id: Scalars['Int'];
+  title: Scalars['String'];
+  caption: Scalars['String'];
+  iconKey?: Maybe<Scalars['String']>;
+  approved: Scalars['Boolean'];
+}
+
 interface CreateUserInput {
   fullName?: Maybe<Scalars['String']>;
   birthday?: Maybe<Scalars['String']>;
@@ -25,9 +41,21 @@ interface CreateUserReturn {
   token: Scalars['String'];
 }
 
+interface LoginInput {
+  email: Scalars['String'];
+  password: Scalars['String'];
+}
+
 interface Mutation {
   __typename?: 'Mutation';
+  addCategory: Category;
   createUser: CreateUserReturn;
+  login: CreateUserReturn;
+}
+
+
+interface MutationAddCategoryArgs {
+  category: AddCategoryInput;
 }
 
 
@@ -35,8 +63,14 @@ interface MutationCreateUserArgs {
   user: CreateUserInput;
 }
 
+
+interface MutationLoginArgs {
+  credentials: LoginInput;
+}
+
 interface Query {
   __typename?: 'Query';
+  getCategories: Array<Category>;
   getUser: User;
 }
 

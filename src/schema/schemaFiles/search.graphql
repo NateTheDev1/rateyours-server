@@ -1,0 +1,22 @@
+type Query {
+	getCategories: [Category!]!
+}
+
+type Mutation {
+	addCategory(category: AddCategoryInput!): Category!
+}
+
+input AddCategoryInput {
+	title: String!
+	iconKey: String
+	caption: String!
+	approved: Boolean!
+}
+
+type Category {
+	id: Int!
+	title: String!
+	caption: String!
+	iconKey: String
+	approved: Boolean!
+}

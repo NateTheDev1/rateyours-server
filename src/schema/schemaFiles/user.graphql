@@ -4,6 +4,12 @@ type Query {
 
 type Mutation {
 	createUser(user: CreateUserInput!): CreateUserReturn!
+	login(credentials: LoginInput!): CreateUserReturn!
+}
+
+input LoginInput {
+	email: String!
+	password: String!
 }
 
 type CreateUserReturn {

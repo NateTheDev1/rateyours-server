@@ -15,6 +15,22 @@ interface Scalars {
   Float: number;
 }
 
+interface AddCategoryInput {
+  title: Scalars['String'];
+  iconKey?: Maybe<Scalars['String']>;
+  caption: Scalars['String'];
+  approved: Scalars['Boolean'];
+}
+
+interface Category {
+  __typename?: 'Category';
+  id: Scalars['Int'];
+  title: Scalars['String'];
+  caption: Scalars['String'];
+  iconKey?: Maybe<Scalars['String']>;
+  approved: Scalars['Boolean'];
+}
+
 interface CreateUserInput {
   fullName?: Maybe<Scalars['String']>;
   birthday?: Maybe<Scalars['String']>;
@@ -28,9 +44,21 @@ interface CreateUserReturn {
   token: Scalars['String'];
 }
 
+interface LoginInput {
+  email: Scalars['String'];
+  password: Scalars['String'];
+}
+
 interface Mutation {
   __typename?: 'Mutation';
+  addCategory: Category;
   createUser: CreateUserReturn;
+  login: CreateUserReturn;
+}
+
+
+interface MutationAddCategoryArgs {
+  category: AddCategoryInput;
 }
 
 
@@ -38,8 +66,14 @@ interface MutationCreateUserArgs {
   user: CreateUserInput;
 }
 
+
+interface MutationLoginArgs {
+  credentials: LoginInput;
+}
+
 interface Query {
   __typename?: 'Query';
+  getCategories: Array<Category>;
   getUser: User;
 }
 
@@ -140,26 +174,41 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  CreateUserInput: CreateUserInput;
+  AddCategoryInput: AddCategoryInput;
   String: ResolverTypeWrapper<Scalars['String']>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Category: ResolverTypeWrapper<Category>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
+  CreateUserInput: CreateUserInput;
   CreateUserReturn: ResolverTypeWrapper<CreateUserReturn>;
+  LoginInput: LoginInput;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
   User: ResolverTypeWrapper<User>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  CreateUserInput: CreateUserInput;
+  AddCategoryInput: AddCategoryInput;
   String: Scalars['String'];
+  Boolean: Scalars['Boolean'];
+  Category: Category;
+  Int: Scalars['Int'];
+  CreateUserInput: CreateUserInput;
   CreateUserReturn: CreateUserReturn;
+  LoginInput: LoginInput;
   Mutation: {};
   Query: {};
-  Int: Scalars['Int'];
   User: User;
-  Boolean: Scalars['Boolean'];
+};
+
+export type CategoryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Category'] = ResolversParentTypes['Category']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  caption?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  iconKey?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  approved?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type CreateUserReturnResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateUserReturn'] = ResolversParentTypes['CreateUserReturn']> = {
@@ -169,10 +218,13 @@ export type CreateUserReturnResolvers<ContextType = any, ParentType extends Reso
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  addCategory?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<MutationAddCategoryArgs, 'category'>>;
   createUser?: Resolver<ResolversTypes['CreateUserReturn'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'user'>>;
+  login?: Resolver<ResolversTypes['CreateUserReturn'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'credentials'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  getCategories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>;
   getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
 };
 
@@ -186,6 +238,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type Resolvers<ContextType = any> = {
+  Category?: CategoryResolvers<ContextType>;
   CreateUserReturn?: CreateUserReturnResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

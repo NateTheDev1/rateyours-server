@@ -4,11 +4,34 @@ schema {
 }
 
 type Query {
+  getCategories: [Category!]!
   getUser(id: Int!): User!
 }
 
 type Mutation {
+  addCategory(category: AddCategoryInput!): Category!
   createUser(user: CreateUserInput!): CreateUserReturn!
+  login(credentials: LoginInput!): CreateUserReturn!
+}
+
+input AddCategoryInput {
+  title: String!
+  iconKey: String
+  caption: String!
+  approved: Boolean!
+}
+
+type Category {
+  id: Int!
+  title: String!
+  caption: String!
+  iconKey: String
+  approved: Boolean!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
 }
 
 type CreateUserReturn {
