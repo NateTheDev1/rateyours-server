@@ -28,6 +28,12 @@ interface Category {
   approved: Scalars['Boolean'];
 }
 
+interface CreateEntityInput {
+  type: Scalars['String'];
+  ownedBy?: Maybe<Scalars['Int']>;
+  specialContent: Scalars['String'];
+}
+
 interface CreateUserInput {
   fullName?: Maybe<Scalars['String']>;
   birthday?: Maybe<Scalars['String']>;
@@ -41,6 +47,27 @@ interface CreateUserReturn {
   token: Scalars['String'];
 }
 
+interface Entity {
+  __typename?: 'Entity';
+  id: Scalars['Int'];
+  type: Scalars['String'];
+  ownedBy?: Maybe<User>;
+  specialContent?: Maybe<Scalars['String']>;
+}
+
+interface EntityOwnershipRequest {
+  __typename?: 'EntityOwnershipRequest';
+  id: Scalars['Int'];
+  requestedBy: Scalars['Int'];
+  approved: Scalars['Boolean'];
+}
+
+interface EntitySearchResponse {
+  __typename?: 'EntitySearchResponse';
+  entities: Array<Maybe<Entity>>;
+  total: Scalars['Int'];
+}
+
 interface LoginInput {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -49,6 +76,7 @@ interface LoginInput {
 interface Mutation {
   __typename?: 'Mutation';
   addCategory: Category;
+  addReview: Review;
   createUser: CreateUserReturn;
   login: CreateUserReturn;
 }
@@ -56,6 +84,11 @@ interface Mutation {
 
 interface MutationAddCategoryArgs {
   category: AddCategoryInput;
+}
+
+
+interface MutationAddReviewArgs {
+  review: ReviewInput;
 }
 
 
@@ -71,12 +104,58 @@ interface MutationLoginArgs {
 interface Query {
   __typename?: 'Query';
   getCategories: Array<Category>;
+  search: ReviewSearchResponse;
   getUser: User;
+}
+
+
+interface QuerySearchArgs {
+  filters: SearchFilters;
+  first?: Maybe<Scalars['Int']>;
+  query: Scalars['String'];
 }
 
 
 interface QueryGetUserArgs {
   id: Scalars['Int'];
+}
+
+interface Review {
+  __typename?: 'Review';
+  id: Scalars['Int'];
+  type: Scalars['String'];
+  title: Scalars['String'];
+  createdBy: User;
+  createdAt: Scalars['String'];
+  body: Scalars['String'];
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
+  rating: Scalars['Int'];
+  specialContent?: Maybe<Scalars['String']>;
+  belongsTo?: Maybe<Entity>;
+}
+
+interface ReviewInput {
+  type: Scalars['String'];
+  title: Scalars['String'];
+  createdBy: Scalars['Int'];
+  body: Scalars['String'];
+  tags: Array<Maybe<Scalars['String']>>;
+  rating: Scalars['Int'];
+  specialContent?: Maybe<Scalars['String']>;
+  belongTo: Scalars['Int'];
+}
+
+interface ReviewSearchResponse {
+  __typename?: 'ReviewSearchResponse';
+  reviews: Array<Maybe<Review>>;
+  total: Scalars['Int'];
+}
+
+interface SearchFilters {
+  minRating: Scalars['Int'];
+  maxRating: Scalars['Int'];
+  sortyBy: Scalars['String'];
+  categoryRestriction?: Maybe<Scalars['String']>;
 }
 
 interface User {

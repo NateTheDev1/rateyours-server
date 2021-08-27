@@ -1,9 +1,49 @@
 type Query {
 	getCategories: [Category!]!
+	search(
+		filters: SearchFilters!
+		first: Int
+		query: String!
+	): ReviewSearchResponse!
 }
 
 type Mutation {
 	addCategory(category: AddCategoryInput!): Category!
+	addReview(review: ReviewInput!): Review!
+}
+
+type EntitySearchResponse {
+	entities: [Entity]!
+	total: Int!
+}
+
+type ReviewSearchResponse {
+	reviews: [Review]!
+	total: Int!
+}
+
+input SearchFilters {
+	minRating: Int!
+	maxRating: Int!
+	sortyBy: String!
+	categoryRestriction: String
+}
+
+input ReviewInput {
+	type: String!
+	title: String!
+	createdBy: Int!
+	body: String!
+	tags: [String]!
+	rating: Int!
+	specialContent: String
+	belongTo: Int!
+}
+
+input CreateEntityInput {
+	type: String!
+	ownedBy: Int
+	specialContent: String!
 }
 
 input AddCategoryInput {
@@ -18,5 +58,31 @@ type Category {
 	title: String!
 	caption: String!
 	iconKey: String
+	approved: Boolean!
+}
+
+type Review {
+	id: Int!
+	type: String!
+	title: String!
+	createdBy: User!
+	createdAt: String!
+	body: String!
+	tags: [String]
+	rating: Int!
+	specialContent: String
+	belongsTo: Entity
+}
+
+type Entity {
+	id: Int!
+	type: String!
+	ownedBy: User
+	specialContent: String
+}
+
+type EntityOwnershipRequest {
+	id: Int!
+	requestedBy: Int!
 	approved: Boolean!
 }

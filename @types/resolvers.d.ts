@@ -31,6 +31,12 @@ interface Category {
   approved: Scalars['Boolean'];
 }
 
+interface CreateEntityInput {
+  type: Scalars['String'];
+  ownedBy?: Maybe<Scalars['Int']>;
+  specialContent: Scalars['String'];
+}
+
 interface CreateUserInput {
   fullName?: Maybe<Scalars['String']>;
   birthday?: Maybe<Scalars['String']>;
@@ -44,6 +50,27 @@ interface CreateUserReturn {
   token: Scalars['String'];
 }
 
+interface Entity {
+  __typename?: 'Entity';
+  id: Scalars['Int'];
+  type: Scalars['String'];
+  ownedBy?: Maybe<User>;
+  specialContent?: Maybe<Scalars['String']>;
+}
+
+interface EntityOwnershipRequest {
+  __typename?: 'EntityOwnershipRequest';
+  id: Scalars['Int'];
+  requestedBy: Scalars['Int'];
+  approved: Scalars['Boolean'];
+}
+
+interface EntitySearchResponse {
+  __typename?: 'EntitySearchResponse';
+  entities: Array<Maybe<Entity>>;
+  total: Scalars['Int'];
+}
+
 interface LoginInput {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -52,6 +79,7 @@ interface LoginInput {
 interface Mutation {
   __typename?: 'Mutation';
   addCategory: Category;
+  addReview: Review;
   createUser: CreateUserReturn;
   login: CreateUserReturn;
 }
@@ -59,6 +87,11 @@ interface Mutation {
 
 interface MutationAddCategoryArgs {
   category: AddCategoryInput;
+}
+
+
+interface MutationAddReviewArgs {
+  review: ReviewInput;
 }
 
 
@@ -74,12 +107,58 @@ interface MutationLoginArgs {
 interface Query {
   __typename?: 'Query';
   getCategories: Array<Category>;
+  search: ReviewSearchResponse;
   getUser: User;
+}
+
+
+interface QuerySearchArgs {
+  filters: SearchFilters;
+  first?: Maybe<Scalars['Int']>;
+  query: Scalars['String'];
 }
 
 
 interface QueryGetUserArgs {
   id: Scalars['Int'];
+}
+
+interface Review {
+  __typename?: 'Review';
+  id: Scalars['Int'];
+  type: Scalars['String'];
+  title: Scalars['String'];
+  createdBy: User;
+  createdAt: Scalars['String'];
+  body: Scalars['String'];
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
+  rating: Scalars['Int'];
+  specialContent?: Maybe<Scalars['String']>;
+  belongsTo?: Maybe<Entity>;
+}
+
+interface ReviewInput {
+  type: Scalars['String'];
+  title: Scalars['String'];
+  createdBy: Scalars['Int'];
+  body: Scalars['String'];
+  tags: Array<Maybe<Scalars['String']>>;
+  rating: Scalars['Int'];
+  specialContent?: Maybe<Scalars['String']>;
+  belongTo: Scalars['Int'];
+}
+
+interface ReviewSearchResponse {
+  __typename?: 'ReviewSearchResponse';
+  reviews: Array<Maybe<Review>>;
+  total: Scalars['Int'];
+}
+
+interface SearchFilters {
+  minRating: Scalars['Int'];
+  maxRating: Scalars['Int'];
+  sortyBy: Scalars['String'];
+  categoryRestriction?: Maybe<Scalars['String']>;
 }
 
 interface User {
@@ -179,11 +258,19 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Category: ResolverTypeWrapper<Category>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
+  CreateEntityInput: CreateEntityInput;
   CreateUserInput: CreateUserInput;
   CreateUserReturn: ResolverTypeWrapper<CreateUserReturn>;
+  Entity: ResolverTypeWrapper<Entity>;
+  EntityOwnershipRequest: ResolverTypeWrapper<EntityOwnershipRequest>;
+  EntitySearchResponse: ResolverTypeWrapper<EntitySearchResponse>;
   LoginInput: LoginInput;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  Review: ResolverTypeWrapper<Review>;
+  ReviewInput: ReviewInput;
+  ReviewSearchResponse: ResolverTypeWrapper<ReviewSearchResponse>;
+  SearchFilters: SearchFilters;
   User: ResolverTypeWrapper<User>;
 };
 
@@ -194,11 +281,19 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   Category: Category;
   Int: Scalars['Int'];
+  CreateEntityInput: CreateEntityInput;
   CreateUserInput: CreateUserInput;
   CreateUserReturn: CreateUserReturn;
+  Entity: Entity;
+  EntityOwnershipRequest: EntityOwnershipRequest;
+  EntitySearchResponse: EntitySearchResponse;
   LoginInput: LoginInput;
   Mutation: {};
   Query: {};
+  Review: Review;
+  ReviewInput: ReviewInput;
+  ReviewSearchResponse: ReviewSearchResponse;
+  SearchFilters: SearchFilters;
   User: User;
 };
 
@@ -217,15 +312,58 @@ export type CreateUserReturnResolvers<ContextType = any, ParentType extends Reso
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type EntityResolvers<ContextType = any, ParentType extends ResolversParentTypes['Entity'] = ResolversParentTypes['Entity']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  ownedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  specialContent?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type EntityOwnershipRequestResolvers<ContextType = any, ParentType extends ResolversParentTypes['EntityOwnershipRequest'] = ResolversParentTypes['EntityOwnershipRequest']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  requestedBy?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  approved?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type EntitySearchResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['EntitySearchResponse'] = ResolversParentTypes['EntitySearchResponse']> = {
+  entities?: Resolver<Array<Maybe<ResolversTypes['Entity']>>, ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addCategory?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<MutationAddCategoryArgs, 'category'>>;
+  addReview?: Resolver<ResolversTypes['Review'], ParentType, ContextType, RequireFields<MutationAddReviewArgs, 'review'>>;
   createUser?: Resolver<ResolversTypes['CreateUserReturn'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'user'>>;
   login?: Resolver<ResolversTypes['CreateUserReturn'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'credentials'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getCategories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>;
+  search?: Resolver<ResolversTypes['ReviewSearchResponse'], ParentType, ContextType, RequireFields<QuerySearchArgs, 'filters' | 'query'>>;
   getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
+};
+
+export type ReviewResolvers<ContextType = any, ParentType extends ResolversParentTypes['Review'] = ResolversParentTypes['Review']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  createdBy?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  tags?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  rating?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  specialContent?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  belongsTo?: Resolver<Maybe<ResolversTypes['Entity']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ReviewSearchResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['ReviewSearchResponse'] = ResolversParentTypes['ReviewSearchResponse']> = {
+  reviews?: Resolver<Array<Maybe<ResolversTypes['Review']>>, ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
@@ -240,8 +378,13 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 export type Resolvers<ContextType = any> = {
   Category?: CategoryResolvers<ContextType>;
   CreateUserReturn?: CreateUserReturnResolvers<ContextType>;
+  Entity?: EntityResolvers<ContextType>;
+  EntityOwnershipRequest?: EntityOwnershipRequestResolvers<ContextType>;
+  EntitySearchResponse?: EntitySearchResponseResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Review?: ReviewResolvers<ContextType>;
+  ReviewSearchResponse?: ReviewSearchResponseResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };
 
