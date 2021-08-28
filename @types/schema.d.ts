@@ -125,7 +125,8 @@ interface Review {
   id: Scalars['Int'];
   type: Scalars['String'];
   title: Scalars['String'];
-  createdBy: User;
+  createdBy: Scalars['Int'];
+  createdByUser: User;
   createdAt: Scalars['String'];
   body: Scalars['String'];
   tags?: Maybe<Array<Maybe<Scalars['String']>>>;

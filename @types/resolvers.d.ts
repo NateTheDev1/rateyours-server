@@ -128,7 +128,8 @@ interface Review {
   id: Scalars['Int'];
   type: Scalars['String'];
   title: Scalars['String'];
-  createdBy: User;
+  createdBy: Scalars['Int'];
+  createdByUser: User;
   createdAt: Scalars['String'];
   body: Scalars['String'];
   tags?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -350,7 +351,8 @@ export type ReviewResolvers<ContextType = any, ParentType extends ResolversParen
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  createdBy?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  createdBy?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  createdByUser?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   tags?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;

@@ -69,7 +69,8 @@ type Review {
   id: Int!
   type: String!
   title: String!
-  createdBy: User!
+  createdBy: Int!
+  createdByUser: User!
   createdAt: String!
   body: String!
   tags: [String]
