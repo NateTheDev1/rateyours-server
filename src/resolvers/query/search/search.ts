@@ -15,6 +15,8 @@ export const search: Resolvers.QueryResolvers['search'] = async (
 	let entities = [];
 	let total = 0;
 
+	let entityPool = [];
+
 	if (categoryRestriction) {
 		total = (
 			await Reviews.query()
@@ -35,6 +37,10 @@ export const search: Resolvers.QueryResolvers['search'] = async (
 			.where({ category: categoryRestriction })
 			.orderBy('rating', 'DESC')
 			.limit(24);
+
+		entityPool = await Entity.query()
+			.where(raw(`UPPER(name) LIKE UPPER('%${args.query}%')`))
+			.where({ type: categoryRestriction });
 	} else if (args.first) {
 		total = (
 			await Reviews.query()
@@ -54,6 +60,9 @@ export const search: Resolvers.QueryResolvers['search'] = async (
 			)
 			.orderBy('rating', 'DESC')
 			.limit(24);
+		entityPool = await Entity.query().where(
+			raw(`UPPER(name) LIKE UPPER('%${args.query}%')`)
+		);
 	} else {
 		total = (
 			await Reviews.query()
@@ -73,7 +82,10 @@ export const search: Resolvers.QueryResolvers['search'] = async (
 			)
 			.orderBy('rating', 'DESC')
 			.limit(24);
+		entityPool = await Entity.query().where(
+			raw(`UPPER(name) LIKE UPPER('%${args.query}%')`)
+		);
 	}
 
-	return { reviews: entities, total };
+	return { reviews: entities, total, entities: entityPool };
 };

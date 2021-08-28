@@ -19,6 +19,7 @@ type EntitySearchResponse {
 
 type ReviewSearchResponse {
 	reviews: [Review]!
+	entities: [Entity]!
 	total: Int!
 }
 
@@ -72,6 +73,7 @@ type Review {
 	tags: [String]
 	rating: Int!
 	specialContent: String
+	entity: Int!
 	belongsTo: Entity
 }
 
@@ -80,6 +82,7 @@ type Entity {
 	type: String!
 	ownedBy: User
 	specialContent: String
+	name: String!
 }
 
 type EntityOwnershipRequest {

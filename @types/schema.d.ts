@@ -149,6 +149,7 @@ interface ReviewInput {
 interface ReviewSearchResponse {
   __typename?: 'ReviewSearchResponse';
   reviews: Array<Maybe<Review>>;
+  entities: Array<Maybe<Entity>>;
   total: Scalars['Int'];
 }
 

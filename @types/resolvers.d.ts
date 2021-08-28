@@ -152,6 +152,7 @@ interface ReviewInput {
 interface ReviewSearchResponse {
   __typename?: 'ReviewSearchResponse';
   reviews: Array<Maybe<Review>>;
+  entities: Array<Maybe<Entity>>;
   total: Scalars['Int'];
 }
 
@@ -364,6 +365,7 @@ export type ReviewResolvers<ContextType = any, ParentType extends ResolversParen
 
 export type ReviewSearchResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['ReviewSearchResponse'] = ResolversParentTypes['ReviewSearchResponse']> = {
   reviews?: Resolver<Array<Maybe<ResolversTypes['Review']>>, ParentType, ContextType>;
+  entities?: Resolver<Array<Maybe<ResolversTypes['Entity']>>, ParentType, ContextType>;
   total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
