@@ -6,6 +6,7 @@ schema {
 type Query {
   getCategories: [Category!]!
   search(filters: SearchFilters!, first: Int, query: String!): ReviewSearchResponse!
+  getEntity(id: Int!): Entity!
   getUser(id: Int!): User!
 }
 
@@ -77,6 +78,7 @@ type Review {
   tags: [String]
   rating: Int!
   specialContent: String
+  entity: Int!
   belongsTo: Entity
 }
 
@@ -85,6 +87,7 @@ type Entity {
   type: String!
   ownedBy: User
   specialContent: String
+  name: String!
 }
 
 type EntityOwnershipRequest {

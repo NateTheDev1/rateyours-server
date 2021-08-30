@@ -53,6 +53,7 @@ interface Entity {
   type: Scalars['String'];
   ownedBy?: Maybe<User>;
   specialContent?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
 }
 
 interface EntityOwnershipRequest {
@@ -105,6 +106,7 @@ interface Query {
   __typename?: 'Query';
   getCategories: Array<Category>;
   search: ReviewSearchResponse;
+  getEntity: Entity;
   getUser: User;
 }
 
@@ -113,6 +115,11 @@ interface QuerySearchArgs {
   filters: SearchFilters;
   first?: Maybe<Scalars['Int']>;
   query: Scalars['String'];
+}
+
+
+interface QueryGetEntityArgs {
+  id: Scalars['Int'];
 }
 
 
@@ -132,6 +139,7 @@ interface Review {
   tags?: Maybe<Array<Maybe<Scalars['String']>>>;
   rating: Scalars['Int'];
   specialContent?: Maybe<Scalars['String']>;
+  entity: Scalars['Int'];
   belongsTo?: Maybe<Entity>;
 }
 

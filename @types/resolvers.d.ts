@@ -56,6 +56,7 @@ interface Entity {
   type: Scalars['String'];
   ownedBy?: Maybe<User>;
   specialContent?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
 }
 
 interface EntityOwnershipRequest {
@@ -108,6 +109,7 @@ interface Query {
   __typename?: 'Query';
   getCategories: Array<Category>;
   search: ReviewSearchResponse;
+  getEntity: Entity;
   getUser: User;
 }
 
@@ -116,6 +118,11 @@ interface QuerySearchArgs {
   filters: SearchFilters;
   first?: Maybe<Scalars['Int']>;
   query: Scalars['String'];
+}
+
+
+interface QueryGetEntityArgs {
+  id: Scalars['Int'];
 }
 
 
@@ -135,6 +142,7 @@ interface Review {
   tags?: Maybe<Array<Maybe<Scalars['String']>>>;
   rating: Scalars['Int'];
   specialContent?: Maybe<Scalars['String']>;
+  entity: Scalars['Int'];
   belongsTo?: Maybe<Entity>;
 }
 
@@ -319,6 +327,7 @@ export type EntityResolvers<ContextType = any, ParentType extends ResolversParen
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   ownedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   specialContent?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -345,6 +354,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getCategories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>;
   search?: Resolver<ResolversTypes['ReviewSearchResponse'], ParentType, ContextType, RequireFields<QuerySearchArgs, 'filters' | 'query'>>;
+  getEntity?: Resolver<ResolversTypes['Entity'], ParentType, ContextType, RequireFields<QueryGetEntityArgs, 'id'>>;
   getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
 };
 
@@ -359,6 +369,7 @@ export type ReviewResolvers<ContextType = any, ParentType extends ResolversParen
   tags?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   rating?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   specialContent?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  entity?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   belongsTo?: Resolver<Maybe<ResolversTypes['Entity']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

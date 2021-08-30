@@ -5,6 +5,7 @@ type Query {
 		first: Int
 		query: String!
 	): ReviewSearchResponse!
+	getEntity(id: Int!): Entity!
 }
 
 type Mutation {
