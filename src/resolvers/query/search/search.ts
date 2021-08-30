@@ -25,7 +25,7 @@ export const search: Resolvers.QueryResolvers['search'] = async (
 						`rating >= ${minRating} AND rating <= ${maxRating} AND UPPER(title) LIKE UPPER('%${args.query}%')`
 					)
 				)
-				.where({ category: categoryRestriction })
+				.where({ type: categoryRestriction })
 				.orderBy('rating', 'DESC')
 		).length;
 		entities = await Reviews.query()
@@ -34,7 +34,7 @@ export const search: Resolvers.QueryResolvers['search'] = async (
 					`rating >= ${minRating} AND rating <= ${maxRating} AND UPPER(title) LIKE UPPER('%${args.query}%')`
 				)
 			)
-			.where({ category: categoryRestriction })
+			.where({ type: categoryRestriction })
 			.orderBy('rating', 'DESC')
 			.limit(24);
 
