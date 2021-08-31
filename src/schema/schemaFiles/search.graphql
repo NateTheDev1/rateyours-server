@@ -6,6 +6,12 @@ type Query {
 		query: String!
 	): ReviewSearchResponse!
 	getEntity(id: Int!): Entity!
+	searchReviews(entityId: Int!, first: Int): SearchReviewsResponse!
+}
+
+type SearchReviewsResponse {
+	reviews: [Review]!
+	total: Int!
 }
 
 type Mutation {
@@ -39,7 +45,7 @@ input ReviewInput {
 	tags: [String]!
 	rating: Int!
 	specialContent: String
-	belongTo: Int!
+	entity: Int!
 }
 
 input CreateEntityInput {
@@ -75,7 +81,6 @@ type Review {
 	rating: Int!
 	specialContent: String
 	entity: Int!
-	belongsTo: Entity
 }
 
 type Entity {

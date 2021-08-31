@@ -9,9 +9,9 @@ class Reviews extends BaseModel {
 	body!: string;
 	tags: string[] = [];
 	rating!: number;
+	entity!: number;
 	// Json object including type specific data like location, teacher name etc.
 	specialContent?: string;
-	entity?: number;
 
 	static get tableName() {
 		return 'reviews';

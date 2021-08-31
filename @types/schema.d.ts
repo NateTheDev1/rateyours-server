@@ -107,6 +107,7 @@ interface Query {
   getCategories: Array<Category>;
   search: ReviewSearchResponse;
   getEntity: Entity;
+  searchReviews: SearchReviewsResponse;
   getUser: User;
 }
 
@@ -120,6 +121,12 @@ interface QuerySearchArgs {
 
 interface QueryGetEntityArgs {
   id: Scalars['Int'];
+}
+
+
+interface QuerySearchReviewsArgs {
+  entityId: Scalars['Int'];
+  first?: Maybe<Scalars['Int']>;
 }
 
 
@@ -140,7 +147,6 @@ interface Review {
   rating: Scalars['Int'];
   specialContent?: Maybe<Scalars['String']>;
   entity: Scalars['Int'];
-  belongsTo?: Maybe<Entity>;
 }
 
 interface ReviewInput {
@@ -151,7 +157,7 @@ interface ReviewInput {
   tags: Array<Maybe<Scalars['String']>>;
   rating: Scalars['Int'];
   specialContent?: Maybe<Scalars['String']>;
-  belongTo: Scalars['Int'];
+  entity: Scalars['Int'];
 }
 
 interface ReviewSearchResponse {
@@ -166,6 +172,12 @@ interface SearchFilters {
   maxRating: Scalars['Int'];
   sortyBy: Scalars['String'];
   categoryRestriction?: Maybe<Scalars['String']>;
+}
+
+interface SearchReviewsResponse {
+  __typename?: 'SearchReviewsResponse';
+  reviews: Array<Maybe<Review>>;
+  total: Scalars['Int'];
 }
 
 interface User {

@@ -110,6 +110,7 @@ interface Query {
   getCategories: Array<Category>;
   search: ReviewSearchResponse;
   getEntity: Entity;
+  searchReviews: SearchReviewsResponse;
   getUser: User;
 }
 
@@ -123,6 +124,12 @@ interface QuerySearchArgs {
 
 interface QueryGetEntityArgs {
   id: Scalars['Int'];
+}
+
+
+interface QuerySearchReviewsArgs {
+  entityId: Scalars['Int'];
+  first?: Maybe<Scalars['Int']>;
 }
 
 
@@ -143,7 +150,6 @@ interface Review {
   rating: Scalars['Int'];
   specialContent?: Maybe<Scalars['String']>;
   entity: Scalars['Int'];
-  belongsTo?: Maybe<Entity>;
 }
 
 interface ReviewInput {
@@ -154,7 +160,7 @@ interface ReviewInput {
   tags: Array<Maybe<Scalars['String']>>;
   rating: Scalars['Int'];
   specialContent?: Maybe<Scalars['String']>;
-  belongTo: Scalars['Int'];
+  entity: Scalars['Int'];
 }
 
 interface ReviewSearchResponse {
@@ -169,6 +175,12 @@ interface SearchFilters {
   maxRating: Scalars['Int'];
   sortyBy: Scalars['String'];
   categoryRestriction?: Maybe<Scalars['String']>;
+}
+
+interface SearchReviewsResponse {
+  __typename?: 'SearchReviewsResponse';
+  reviews: Array<Maybe<Review>>;
+  total: Scalars['Int'];
 }
 
 interface User {
@@ -281,6 +293,7 @@ export type ResolversTypes = {
   ReviewInput: ReviewInput;
   ReviewSearchResponse: ResolverTypeWrapper<ReviewSearchResponse>;
   SearchFilters: SearchFilters;
+  SearchReviewsResponse: ResolverTypeWrapper<SearchReviewsResponse>;
   User: ResolverTypeWrapper<User>;
 };
 
@@ -304,6 +317,7 @@ export type ResolversParentTypes = {
   ReviewInput: ReviewInput;
   ReviewSearchResponse: ReviewSearchResponse;
   SearchFilters: SearchFilters;
+  SearchReviewsResponse: SearchReviewsResponse;
   User: User;
 };
 
@@ -355,6 +369,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getCategories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>;
   search?: Resolver<ResolversTypes['ReviewSearchResponse'], ParentType, ContextType, RequireFields<QuerySearchArgs, 'filters' | 'query'>>;
   getEntity?: Resolver<ResolversTypes['Entity'], ParentType, ContextType, RequireFields<QueryGetEntityArgs, 'id'>>;
+  searchReviews?: Resolver<ResolversTypes['SearchReviewsResponse'], ParentType, ContextType, RequireFields<QuerySearchReviewsArgs, 'entityId'>>;
   getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
 };
 
@@ -370,13 +385,18 @@ export type ReviewResolvers<ContextType = any, ParentType extends ResolversParen
   rating?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   specialContent?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   entity?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  belongsTo?: Resolver<Maybe<ResolversTypes['Entity']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type ReviewSearchResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['ReviewSearchResponse'] = ResolversParentTypes['ReviewSearchResponse']> = {
   reviews?: Resolver<Array<Maybe<ResolversTypes['Review']>>, ParentType, ContextType>;
   entities?: Resolver<Array<Maybe<ResolversTypes['Entity']>>, ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type SearchReviewsResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['SearchReviewsResponse'] = ResolversParentTypes['SearchReviewsResponse']> = {
+  reviews?: Resolver<Array<Maybe<ResolversTypes['Review']>>, ParentType, ContextType>;
   total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -400,6 +420,7 @@ export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
   Review?: ReviewResolvers<ContextType>;
   ReviewSearchResponse?: ReviewSearchResponseResolvers<ContextType>;
+  SearchReviewsResponse?: SearchReviewsResponseResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };
 

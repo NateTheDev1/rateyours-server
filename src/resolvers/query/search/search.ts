@@ -40,29 +40,32 @@ export const search: Resolvers.QueryResolvers['search'] = async (
 
 		entityPool = await Entity.query()
 			.where(raw(`UPPER(name) LIKE UPPER('%${args.query}%')`))
-			.where({ type: categoryRestriction });
+			.where({ type: categoryRestriction })
+			.limit(150);
 	} else if (args.first) {
 		total = (
 			await Reviews.query()
 				.where(
 					raw(
-						`rating >= ${minRating} AND rating <= ${maxRating} AND id >= ${args.first} AND UPPER(title) LIKE UPPER('%${args.query}%')`
+						`rating >= ${minRating} AND rating <= ${maxRating} AND UPPER(title) LIKE UPPER('%${args.query}%')`
 					)
 				)
 				.orderBy('rating', 'DESC')
+				.offset(args.first)
 				.limit(24)
 		).length;
 		entities = await Reviews.query()
 			.where(
 				raw(
-					`rating >= ${minRating} AND rating <= ${maxRating} AND id >= ${args.first} AND UPPER(title) LIKE UPPER('%${args.query}%')`
+					`rating >= ${minRating} AND rating <= ${maxRating} AND UPPER(title) LIKE UPPER('%${args.query}%')`
 				)
 			)
 			.orderBy('rating', 'DESC')
+			.offset(args.first)
 			.limit(24);
-		entityPool = await Entity.query().where(
-			raw(`UPPER(name) LIKE UPPER('%${args.query}%')`)
-		);
+		entityPool = await Entity.query()
+			.where(raw(`UPPER(name) LIKE UPPER('%${args.query}%')`))
+			.limit(150);
 	} else {
 		total = (
 			await Reviews.query()
@@ -82,9 +85,9 @@ export const search: Resolvers.QueryResolvers['search'] = async (
 			)
 			.orderBy('rating', 'DESC')
 			.limit(24);
-		entityPool = await Entity.query().where(
-			raw(`UPPER(name) LIKE UPPER('%${args.query}%')`)
-		);
+		entityPool = await Entity.query()
+			.where(raw(`UPPER(name) LIKE UPPER('%${args.query}%')`))
+			.limit(150);
 	}
 
 	return { reviews: entities, total, entities: entityPool };
