@@ -57,6 +57,7 @@ interface Entity {
   ownedBy?: Maybe<User>;
   specialContent?: Maybe<Scalars['String']>;
   name: Scalars['String'];
+  views?: Maybe<Scalars['Int']>;
 }
 
 interface EntityOwnershipRequest {
@@ -81,6 +82,7 @@ interface Mutation {
   __typename?: 'Mutation';
   addCategory: Category;
   addReview: Review;
+  updateEntityViews: Scalars['Boolean'];
   createUser: CreateUserReturn;
   login: CreateUserReturn;
 }
@@ -93,6 +95,12 @@ interface MutationAddCategoryArgs {
 
 interface MutationAddReviewArgs {
   review: ReviewInput;
+}
+
+
+interface MutationUpdateEntityViewsArgs {
+  viewCount: Scalars['Int'];
+  entityId: Scalars['Int'];
 }
 
 
@@ -342,6 +350,7 @@ export type EntityResolvers<ContextType = any, ParentType extends ResolversParen
   ownedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   specialContent?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  views?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -361,6 +370,7 @@ export type EntitySearchResponseResolvers<ContextType = any, ParentType extends 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addCategory?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<MutationAddCategoryArgs, 'category'>>;
   addReview?: Resolver<ResolversTypes['Review'], ParentType, ContextType, RequireFields<MutationAddReviewArgs, 'review'>>;
+  updateEntityViews?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationUpdateEntityViewsArgs, 'viewCount' | 'entityId'>>;
   createUser?: Resolver<ResolversTypes['CreateUserReturn'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'user'>>;
   login?: Resolver<ResolversTypes['CreateUserReturn'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'credentials'>>;
 };

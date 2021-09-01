@@ -17,6 +17,7 @@ type SearchReviewsResponse {
 type Mutation {
 	addCategory(category: AddCategoryInput!): Category!
 	addReview(review: ReviewInput!): Review!
+	updateEntityViews(viewCount: Int!, entityId: Int!): Boolean!
 }
 
 type EntitySearchResponse {
@@ -89,6 +90,7 @@ type Entity {
 	ownedBy: User
 	specialContent: String
 	name: String!
+	views: Int
 }
 
 type EntityOwnershipRequest {

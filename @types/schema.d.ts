@@ -54,6 +54,7 @@ interface Entity {
   ownedBy?: Maybe<User>;
   specialContent?: Maybe<Scalars['String']>;
   name: Scalars['String'];
+  views?: Maybe<Scalars['Int']>;
 }
 
 interface EntityOwnershipRequest {
@@ -78,6 +79,7 @@ interface Mutation {
   __typename?: 'Mutation';
   addCategory: Category;
   addReview: Review;
+  updateEntityViews: Scalars['Boolean'];
   createUser: CreateUserReturn;
   login: CreateUserReturn;
 }
@@ -90,6 +92,12 @@ interface MutationAddCategoryArgs {
 
 interface MutationAddReviewArgs {
   review: ReviewInput;
+}
+
+
+interface MutationUpdateEntityViewsArgs {
+  viewCount: Scalars['Int'];
+  entityId: Scalars['Int'];
 }
 
 

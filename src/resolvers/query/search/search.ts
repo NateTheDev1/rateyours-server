@@ -17,7 +17,7 @@ export const search: Resolvers.QueryResolvers['search'] = async (
 
 	let entityPool = [];
 
-	if (categoryRestriction) {
+	if (categoryRestriction && !args.first) {
 		total = (
 			await Reviews.query()
 				.where(
@@ -42,7 +42,33 @@ export const search: Resolvers.QueryResolvers['search'] = async (
 			.where(raw(`UPPER(name) LIKE UPPER('%${args.query}%')`))
 			.where({ type: categoryRestriction })
 			.limit(150);
-	} else if (args.first) {
+	} else if (categoryRestriction && args.first) {
+		total = (
+			await Reviews.query()
+				.where(
+					raw(
+						`rating >= ${minRating} AND rating <= ${maxRating} AND UPPER(title) LIKE UPPER('%${args.query}%')`
+					)
+				)
+				.where({ type: categoryRestriction })
+				.orderBy('rating', 'DESC')
+		).length;
+		entities = await Reviews.query()
+			.where(
+				raw(
+					`rating >= ${minRating} AND rating <= ${maxRating} AND UPPER(title) LIKE UPPER('%${args.query}%')`
+				)
+			)
+			.where({ type: categoryRestriction })
+			.orderBy('rating', 'DESC')
+			.offset(args.first)
+			.limit(24);
+
+		entityPool = await Entity.query()
+			.where(raw(`UPPER(name) LIKE UPPER('%${args.query}%')`))
+			.where({ type: categoryRestriction })
+			.limit(150);
+	} else if (!categoryRestriction && args.first) {
 		total = (
 			await Reviews.query()
 				.where(
@@ -51,8 +77,6 @@ export const search: Resolvers.QueryResolvers['search'] = async (
 					)
 				)
 				.orderBy('rating', 'DESC')
-				.offset(args.first)
-				.limit(24)
 		).length;
 		entities = await Reviews.query()
 			.where(
