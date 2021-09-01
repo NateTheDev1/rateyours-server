@@ -75,7 +75,6 @@ export const search: Resolvers.QueryResolvers['search'] = async (
 					)
 				)
 				.orderBy('rating', 'DESC')
-				.limit(24)
 		).length;
 		entities = await Reviews.query()
 			.where(
