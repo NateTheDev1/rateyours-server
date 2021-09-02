@@ -8,6 +8,7 @@ type Query {
   search(filters: SearchFilters!, first: Int, query: String!): ReviewSearchResponse!
   getEntity(id: Int!): Entity!
   searchReviews(entityId: Int!, first: Int): SearchReviewsResponse!
+  hasReviewed(entityId: Int!, userId: Int!): Boolean!
   getUser(id: Int!): User!
 }
 
@@ -18,7 +19,7 @@ type SearchReviewsResponse {
 
 type Mutation {
   addCategory(category: AddCategoryInput!): Category!
-  addReview(review: ReviewInput!): Review!
+  addReview(review: ReviewInput!, hasReviewed: Boolean!): Review!
   updateEntityViews(viewCount: Int!, entityId: Int!): Boolean!
   createUser(user: CreateUserInput!): CreateUserReturn!
   login(credentials: LoginInput!): CreateUserReturn!

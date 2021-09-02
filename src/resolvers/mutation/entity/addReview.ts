@@ -19,6 +19,10 @@ export const addReview: Resolvers.MutationResolvers['addReview'] = async (
 		entity
 	} = args.review;
 
+	if (args.hasReviewed) {
+		await Reviews.query().delete().where({ createdBy, entity });
+	}
+
 	let review = await Reviews.query().insertAndFetch({
 		type,
 		title,

@@ -92,6 +92,7 @@ interface MutationAddCategoryArgs {
 
 interface MutationAddReviewArgs {
   review: ReviewInput;
+  hasReviewed: Scalars['Boolean'];
 }
 
 
@@ -116,6 +117,7 @@ interface Query {
   search: ReviewSearchResponse;
   getEntity: Entity;
   searchReviews: SearchReviewsResponse;
+  hasReviewed: Scalars['Boolean'];
   getUser: User;
 }
 
@@ -135,6 +137,12 @@ interface QueryGetEntityArgs {
 interface QuerySearchReviewsArgs {
   entityId: Scalars['Int'];
   first?: Maybe<Scalars['Int']>;
+}
+
+
+interface QueryHasReviewedArgs {
+  entityId: Scalars['Int'];
+  userId: Scalars['Int'];
 }
 
 
