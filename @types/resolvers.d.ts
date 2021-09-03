@@ -29,6 +29,14 @@ interface Category {
   caption: Scalars['String'];
   iconKey?: Maybe<Scalars['String']>;
   approved: Scalars['Boolean'];
+  banner?: Maybe<Scalars['String']>;
+  topTen: CategoryTopTen;
+}
+
+interface CategoryTopTen {
+  __typename?: 'CategoryTopTen';
+  mostViewed: Array<Maybe<Entity>>;
+  mostRecent: Array<Maybe<Entity>>;
 }
 
 interface CreateEntityInput {
@@ -121,6 +129,7 @@ interface Query {
   getEntity: Entity;
   searchReviews: SearchReviewsResponse;
   hasReviewed: Scalars['Boolean'];
+  getCategory: Category;
   getUser: User;
 }
 
@@ -146,6 +155,11 @@ interface QuerySearchReviewsArgs {
 interface QueryHasReviewedArgs {
   entityId: Scalars['Int'];
   userId: Scalars['Int'];
+}
+
+
+interface QueryGetCategoryArgs {
+  id: Scalars['Int'];
 }
 
 
@@ -296,6 +310,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Category: ResolverTypeWrapper<Category>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
+  CategoryTopTen: ResolverTypeWrapper<CategoryTopTen>;
   CreateEntityInput: CreateEntityInput;
   CreateUserInput: CreateUserInput;
   CreateUserReturn: ResolverTypeWrapper<CreateUserReturn>;
@@ -320,6 +335,7 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   Category: Category;
   Int: Scalars['Int'];
+  CategoryTopTen: CategoryTopTen;
   CreateEntityInput: CreateEntityInput;
   CreateUserInput: CreateUserInput;
   CreateUserReturn: CreateUserReturn;
@@ -343,6 +359,14 @@ export type CategoryResolvers<ContextType = any, ParentType extends ResolversPar
   caption?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   iconKey?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   approved?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  banner?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  topTen?: Resolver<ResolversTypes['CategoryTopTen'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CategoryTopTenResolvers<ContextType = any, ParentType extends ResolversParentTypes['CategoryTopTen'] = ResolversParentTypes['CategoryTopTen']> = {
+  mostViewed?: Resolver<Array<Maybe<ResolversTypes['Entity']>>, ParentType, ContextType>;
+  mostRecent?: Resolver<Array<Maybe<ResolversTypes['Entity']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -389,6 +413,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getEntity?: Resolver<ResolversTypes['Entity'], ParentType, ContextType, RequireFields<QueryGetEntityArgs, 'id'>>;
   searchReviews?: Resolver<ResolversTypes['SearchReviewsResponse'], ParentType, ContextType, RequireFields<QuerySearchReviewsArgs, 'entityId'>>;
   hasReviewed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<QueryHasReviewedArgs, 'entityId' | 'userId'>>;
+  getCategory?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<QueryGetCategoryArgs, 'id'>>;
   getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
 };
 
@@ -431,6 +456,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type Resolvers<ContextType = any> = {
   Category?: CategoryResolvers<ContextType>;
+  CategoryTopTen?: CategoryTopTenResolvers<ContextType>;
   CreateUserReturn?: CreateUserReturnResolvers<ContextType>;
   Entity?: EntityResolvers<ContextType>;
   EntityOwnershipRequest?: EntityOwnershipRequestResolvers<ContextType>;

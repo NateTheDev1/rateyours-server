@@ -6,6 +6,7 @@ class Category extends BaseModel {
 	caption!: string;
 	iconKey?: string;
 	approved!: boolean;
+	banner?: string;
 
 	static get tableName() {
 		return 'categories';

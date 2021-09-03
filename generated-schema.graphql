@@ -9,6 +9,7 @@ type Query {
   getEntity(id: Int!): Entity!
   searchReviews(entityId: Int!, first: Int): SearchReviewsResponse!
   hasReviewed(entityId: Int!, userId: Int!): Boolean!
+  getCategory(id: Int!): Category!
   getUser(id: Int!): User!
 }
 
@@ -73,6 +74,13 @@ type Category {
   caption: String!
   iconKey: String
   approved: Boolean!
+  banner: String
+  topTen: CategoryTopTen!
+}
+
+type CategoryTopTen {
+  mostViewed: [Entity]!
+  mostRecent: [Entity]!
 }
 
 type Review {

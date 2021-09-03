@@ -26,6 +26,14 @@ interface Category {
   caption: Scalars['String'];
   iconKey?: Maybe<Scalars['String']>;
   approved: Scalars['Boolean'];
+  banner?: Maybe<Scalars['String']>;
+  topTen: CategoryTopTen;
+}
+
+interface CategoryTopTen {
+  __typename?: 'CategoryTopTen';
+  mostViewed: Array<Maybe<Entity>>;
+  mostRecent: Array<Maybe<Entity>>;
 }
 
 interface CreateEntityInput {
@@ -118,6 +126,7 @@ interface Query {
   getEntity: Entity;
   searchReviews: SearchReviewsResponse;
   hasReviewed: Scalars['Boolean'];
+  getCategory: Category;
   getUser: User;
 }
 
@@ -143,6 +152,11 @@ interface QuerySearchReviewsArgs {
 interface QueryHasReviewedArgs {
   entityId: Scalars['Int'];
   userId: Scalars['Int'];
+}
+
+
+interface QueryGetCategoryArgs {
+  id: Scalars['Int'];
 }
 
 
