@@ -1,5 +1,6 @@
 import Category from '../../../db/models/Categories';
 
+//@ts-ignore
 export const getCategories: Resolvers.QueryResolvers['getCategories'] = async (
 	parent,
 	args,
