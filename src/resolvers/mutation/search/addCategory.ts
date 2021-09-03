@@ -1,5 +1,6 @@
 import Category from '../../../db/models/Categories';
 
+//@ts-ignore
 export const addCategory: Resolvers.MutationResolvers['addCategory'] = async (
 	parent,
 	args,
