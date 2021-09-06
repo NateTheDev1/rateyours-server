@@ -128,6 +128,7 @@ interface Query {
   hasReviewed: Scalars['Boolean'];
   getCategory: Category;
   getUser: User;
+  getUserActivity: UserActivity;
 }
 
 
@@ -161,6 +162,11 @@ interface QueryGetCategoryArgs {
 
 
 interface QueryGetUserArgs {
+  id: Scalars['Int'];
+}
+
+
+interface QueryGetUserActivityArgs {
   id: Scalars['Int'];
 }
 
@@ -217,6 +223,11 @@ interface User {
   birthday?: Maybe<Scalars['String']>;
   accountType: Scalars['String'];
   email: Scalars['String'];
+}
+
+interface UserActivity {
+  __typename?: 'UserActivity';
+  reviews: Array<Maybe<Review>>;
 }
 
 } } export {};

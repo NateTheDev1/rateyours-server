@@ -1,5 +1,6 @@
 type Query {
 	getUser(id: Int!): User!
+	getUserActivity(id: Int!): UserActivity!
 }
 
 type Mutation {
@@ -30,4 +31,8 @@ type User {
 	birthday: String
 	accountType: String!
 	email: String!
+}
+
+type UserActivity {
+	reviews: [Review]!
 }

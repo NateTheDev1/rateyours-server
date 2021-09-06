@@ -131,6 +131,7 @@ interface Query {
   hasReviewed: Scalars['Boolean'];
   getCategory: Category;
   getUser: User;
+  getUserActivity: UserActivity;
 }
 
 
@@ -164,6 +165,11 @@ interface QueryGetCategoryArgs {
 
 
 interface QueryGetUserArgs {
+  id: Scalars['Int'];
+}
+
+
+interface QueryGetUserActivityArgs {
   id: Scalars['Int'];
 }
 
@@ -220,6 +226,11 @@ interface User {
   birthday?: Maybe<Scalars['String']>;
   accountType: Scalars['String'];
   email: Scalars['String'];
+}
+
+interface UserActivity {
+  __typename?: 'UserActivity';
+  reviews: Array<Maybe<Review>>;
 }
 
 
@@ -326,6 +337,7 @@ export type ResolversTypes = {
   SearchFilters: SearchFilters;
   SearchReviewsResponse: ResolverTypeWrapper<SearchReviewsResponse>;
   User: ResolverTypeWrapper<User>;
+  UserActivity: ResolverTypeWrapper<UserActivity>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -351,6 +363,7 @@ export type ResolversParentTypes = {
   SearchFilters: SearchFilters;
   SearchReviewsResponse: SearchReviewsResponse;
   User: User;
+  UserActivity: UserActivity;
 };
 
 export type CategoryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Category'] = ResolversParentTypes['Category']> = {
@@ -415,6 +428,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   hasReviewed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<QueryHasReviewedArgs, 'entityId' | 'userId'>>;
   getCategory?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<QueryGetCategoryArgs, 'id'>>;
   getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
+  getUserActivity?: Resolver<ResolversTypes['UserActivity'], ParentType, ContextType, RequireFields<QueryGetUserActivityArgs, 'id'>>;
 };
 
 export type ReviewResolvers<ContextType = any, ParentType extends ResolversParentTypes['Review'] = ResolversParentTypes['Review']> = {
@@ -454,6 +468,11 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type UserActivityResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserActivity'] = ResolversParentTypes['UserActivity']> = {
+  reviews?: Resolver<Array<Maybe<ResolversTypes['Review']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = any> = {
   Category?: CategoryResolvers<ContextType>;
   CategoryTopTen?: CategoryTopTenResolvers<ContextType>;
@@ -467,6 +486,7 @@ export type Resolvers<ContextType = any> = {
   ReviewSearchResponse?: ReviewSearchResponseResolvers<ContextType>;
   SearchReviewsResponse?: SearchReviewsResponseResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
+  UserActivity?: UserActivityResolvers<ContextType>;
 };
 
 

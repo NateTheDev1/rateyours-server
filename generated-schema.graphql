@@ -11,6 +11,7 @@ type Query {
   hasReviewed(entityId: Int!, userId: Int!): Boolean!
   getCategory(id: Int!): Category!
   getUser(id: Int!): User!
+  getUserActivity(id: Int!): UserActivity!
 }
 
 type SearchReviewsResponse {
@@ -135,4 +136,8 @@ type User {
   birthday: String
   accountType: String!
   email: String!
+}
+
+type UserActivity {
+  reviews: [Review]!
 }
