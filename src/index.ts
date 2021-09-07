@@ -12,6 +12,14 @@ import { initializeMiddleware } from './services/MiddlewareService';
 import { createContext } from './services/ContextService';
 import { typeDefs } from './schema';
 
+import * as Sentry from '@sentry/node';
+import * as Tracing from '@sentry/tracing';
+
+Sentry.init({
+	dsn: process.env.SENTRY_DSN,
+	tracesSampleRate: 1.0
+});
+
 dotenv.config();
 
 const PORT = process.env.PORT;
