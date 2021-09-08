@@ -90,6 +90,9 @@ interface Mutation {
   updateEntityViews: Scalars['Boolean'];
   createUser: CreateUserReturn;
   login: CreateUserReturn;
+  sendPasswordReset: Scalars['Boolean'];
+  resetPassword: Scalars['Boolean'];
+  updateUserDetails: Scalars['Boolean'];
 }
 
 
@@ -119,6 +122,21 @@ interface MutationLoginArgs {
   credentials: LoginInput;
 }
 
+
+interface MutationSendPasswordResetArgs {
+  email?: Maybe<Scalars['String']>;
+}
+
+
+interface MutationResetPasswordArgs {
+  newCredentials: ResetPasswordCredentials;
+}
+
+
+interface MutationUpdateUserDetailsArgs {
+  patch: UpdateUserDetailsInput;
+}
+
 interface Query {
   __typename?: 'Query';
   getCategories: Array<Category>;
@@ -128,6 +146,7 @@ interface Query {
   hasReviewed: Scalars['Boolean'];
   getCategory: Category;
   getUser: User;
+  getUserActivity: UserActivity;
 }
 
 
@@ -162,6 +181,17 @@ interface QueryGetCategoryArgs {
 
 interface QueryGetUserArgs {
   id: Scalars['Int'];
+}
+
+
+interface QueryGetUserActivityArgs {
+  id: Scalars['Int'];
+}
+
+interface ResetPasswordCredentials {
+  email: Scalars['String'];
+  newPassword: Scalars['String'];
+  token: Scalars['String'];
 }
 
 interface Review {
@@ -210,6 +240,13 @@ interface SearchReviewsResponse {
   total: Scalars['Int'];
 }
 
+interface UpdateUserDetailsInput {
+  userId: Scalars['Int'];
+  fullName?: Maybe<Scalars['String']>;
+  birthday?: Maybe<Scalars['String']>;
+  accountType?: Maybe<Scalars['String']>;
+}
+
 interface User {
   __typename?: 'User';
   id: Scalars['Int'];
@@ -217,6 +254,11 @@ interface User {
   birthday?: Maybe<Scalars['String']>;
   accountType: Scalars['String'];
   email: Scalars['String'];
+}
+
+interface UserActivity {
+  __typename?: 'UserActivity';
+  reviews: Array<Maybe<Review>>;
 }
 
 } } export {};

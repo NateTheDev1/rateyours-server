@@ -11,6 +11,7 @@ type Query {
   hasReviewed(entityId: Int!, userId: Int!): Boolean!
   getCategory(id: Int!): Category!
   getUser(id: Int!): User!
+  getUserActivity(id: Int!): UserActivity!
 }
 
 type SearchReviewsResponse {
@@ -24,6 +25,9 @@ type Mutation {
   updateEntityViews(viewCount: Int!, entityId: Int!): Boolean!
   createUser(user: CreateUserInput!): CreateUserReturn!
   login(credentials: LoginInput!): CreateUserReturn!
+  sendPasswordReset(email: String): Boolean!
+  resetPassword(newCredentials: ResetPasswordCredentials!): Boolean!
+  updateUserDetails(patch: UpdateUserDetailsInput!): Boolean!
 }
 
 type EntitySearchResponse {
@@ -112,6 +116,19 @@ type EntityOwnershipRequest {
   approved: Boolean!
 }
 
+input UpdateUserDetailsInput {
+  userId: Int!
+  fullName: String
+  birthday: String
+  accountType: String
+}
+
+input ResetPasswordCredentials {
+  email: String!
+  newPassword: String!
+  token: String!
+}
+
 input LoginInput {
   email: String!
   password: String!
@@ -135,4 +152,8 @@ type User {
   birthday: String
   accountType: String!
   email: String!
+}
+
+type UserActivity {
+  reviews: [Review]!
 }
