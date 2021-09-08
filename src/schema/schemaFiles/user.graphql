@@ -1,10 +1,27 @@
 type Query {
 	getUser(id: Int!): User!
+	getUserActivity(id: Int!): UserActivity!
 }
 
 type Mutation {
 	createUser(user: CreateUserInput!): CreateUserReturn!
 	login(credentials: LoginInput!): CreateUserReturn!
+	sendPasswordReset(email: String): Boolean!
+	resetPassword(newCredentials: ResetPasswordCredentials!): Boolean!
+	updateUserDetails(patch: UpdateUserDetailsInput!): Boolean!
+}
+
+input UpdateUserDetailsInput {
+	userId: Int!
+	fullName: String
+	birthday: String
+	accountType: String
+}
+
+input ResetPasswordCredentials {
+	email: String!
+	newPassword: String!
+	token: String!
 }
 
 input LoginInput {
@@ -30,4 +47,8 @@ type User {
 	birthday: String
 	accountType: String!
 	email: String!
+}
+
+type UserActivity {
+	reviews: [Review]!
 }
