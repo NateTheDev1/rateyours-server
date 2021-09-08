@@ -5,6 +5,7 @@ import {
 	signJWT
 } from '../../../services/AuthenticationService';
 import { verifyAuthentication } from '../../../utils/verifyAuthentication';
+import sgMail from '@sendgrid/mail';
 
 export const createUser: Resolvers.MutationResolvers['createUser'] = async (
 	parent,
@@ -19,6 +20,8 @@ export const createUser: Resolvers.MutationResolvers['createUser'] = async (
 		.where({ email: args.user.email })
 		.first();
 
+	sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
+
 	if (existing) {
 		throw new ApolloError('A user with this name already exists.', '409');
 	}
@@ -29,6 +32,16 @@ export const createUser: Resolvers.MutationResolvers['createUser'] = async (
 		...args.user,
 		password: await authService.hashPassword(),
 		accountType: 'default'
+	});
+
+	await sgMail.send({
+		to: [created.email],
+		from: {
+			email: 'corporate@yourateit.io',
+			name: 'Rateit'
+		},
+		subject: 'Thank you for signing up for Rateit!',
+		templateId: 'd-029b5ef1fb8c473daa553028f48ccdd9'
 	});
 
 	context.session = {

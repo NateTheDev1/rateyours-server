@@ -6,6 +6,22 @@ type Query {
 type Mutation {
 	createUser(user: CreateUserInput!): CreateUserReturn!
 	login(credentials: LoginInput!): CreateUserReturn!
+	sendPasswordReset(email: String): Boolean!
+	resetPassword(newCredentials: ResetPasswordCredentials!): Boolean!
+	updateUserDetails(patch: UpdateUserDetailsInput!): Boolean!
+}
+
+input UpdateUserDetailsInput {
+	userId: Int!
+	fullName: String
+	birthday: String
+	accountType: String
+}
+
+input ResetPasswordCredentials {
+	email: String!
+	newPassword: String!
+	token: String!
 }
 
 input LoginInput {
