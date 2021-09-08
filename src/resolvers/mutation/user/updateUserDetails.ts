@@ -1,11 +1,6 @@
-import { ApolloError } from 'apollo-server-express';
 import User from '../../../db/models/User';
-import {
-	AuthenticationService,
-	signJWT
-} from '../../../services/AuthenticationService';
+
 import { verifyAuthentication } from '../../../utils/verifyAuthentication';
-import sgMail from '@sendgrid/mail';
 
 export const updateUserDetails: Resolvers.MutationResolvers['updateUserDetails'] =
 	async (parent, args, context: Services.ServerContext) => {
