@@ -147,6 +147,7 @@ interface Query {
   getCategory: Category;
   getUser: User;
   getUserActivity: UserActivity;
+  getUserEntities: Array<Maybe<Entity>>;
 }
 
 
@@ -185,6 +186,11 @@ interface QueryGetUserArgs {
 
 
 interface QueryGetUserActivityArgs {
+  id: Scalars['Int'];
+}
+
+
+interface QueryGetUserEntitiesArgs {
   id: Scalars['Int'];
 }
 

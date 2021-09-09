@@ -1,6 +1,7 @@
 type Query {
 	getUser(id: Int!): User!
 	getUserActivity(id: Int!): UserActivity!
+	getUserEntities(id: Int!): [Entity]!
 }
 
 type Mutation {

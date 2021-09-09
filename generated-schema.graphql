@@ -12,6 +12,7 @@ type Query {
   getCategory(id: Int!): Category!
   getUser(id: Int!): User!
   getUserActivity(id: Int!): UserActivity!
+  getUserEntities(id: Int!): [Entity]!
 }
 
 type SearchReviewsResponse {
