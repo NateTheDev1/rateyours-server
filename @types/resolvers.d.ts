@@ -150,6 +150,7 @@ interface Query {
   getCategory: Category;
   getUser: User;
   getUserActivity: UserActivity;
+  getUserEntities: Array<Maybe<Entity>>;
 }
 
 
@@ -188,6 +189,11 @@ interface QueryGetUserArgs {
 
 
 interface QueryGetUserActivityArgs {
+  id: Scalars['Int'];
+}
+
+
+interface QueryGetUserEntitiesArgs {
   id: Scalars['Int'];
 }
 
@@ -467,6 +473,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getCategory?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<QueryGetCategoryArgs, 'id'>>;
   getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
   getUserActivity?: Resolver<ResolversTypes['UserActivity'], ParentType, ContextType, RequireFields<QueryGetUserActivityArgs, 'id'>>;
+  getUserEntities?: Resolver<Array<Maybe<ResolversTypes['Entity']>>, ParentType, ContextType, RequireFields<QueryGetUserEntitiesArgs, 'id'>>;
 };
 
 export type ReviewResolvers<ContextType = any, ParentType extends ResolversParentTypes['Review'] = ResolversParentTypes['Review']> = {
