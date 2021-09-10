@@ -176,8 +176,10 @@ interface QueryGetEntityArgs {
 
 
 interface QuerySearchReviewsArgs {
+  filters: ReviewSearchFilters;
   entityId: Scalars['Int'];
   first?: Maybe<Scalars['Int']>;
+  query?: Maybe<Scalars['String']>;
 }
 
 
@@ -241,6 +243,12 @@ interface ReviewInput {
   rating: Scalars['Int'];
   specialContent?: Maybe<Scalars['String']>;
   entity: Scalars['Int'];
+}
+
+interface ReviewSearchFilters {
+  minRating: Scalars['Int'];
+  maxRating: Scalars['Int'];
+  sortBy: Scalars['String'];
 }
 
 interface ReviewSearchResponse {
@@ -385,6 +393,7 @@ export type ResolversTypes = {
   ResetPasswordCredentials: ResetPasswordCredentials;
   Review: ResolverTypeWrapper<Review>;
   ReviewInput: ReviewInput;
+  ReviewSearchFilters: ReviewSearchFilters;
   ReviewSearchResponse: ResolverTypeWrapper<ReviewSearchResponse>;
   SearchFilters: SearchFilters;
   SearchReviewsResponse: ResolverTypeWrapper<SearchReviewsResponse>;
@@ -413,6 +422,7 @@ export type ResolversParentTypes = {
   ResetPasswordCredentials: ResetPasswordCredentials;
   Review: Review;
   ReviewInput: ReviewInput;
+  ReviewSearchFilters: ReviewSearchFilters;
   ReviewSearchResponse: ReviewSearchResponse;
   SearchFilters: SearchFilters;
   SearchReviewsResponse: SearchReviewsResponse;
@@ -484,7 +494,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getCategories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>;
   search?: Resolver<ResolversTypes['ReviewSearchResponse'], ParentType, ContextType, RequireFields<QuerySearchArgs, 'filters' | 'query'>>;
   getEntity?: Resolver<ResolversTypes['Entity'], ParentType, ContextType, RequireFields<QueryGetEntityArgs, 'id'>>;
-  searchReviews?: Resolver<ResolversTypes['SearchReviewsResponse'], ParentType, ContextType, RequireFields<QuerySearchReviewsArgs, 'entityId'>>;
+  searchReviews?: Resolver<ResolversTypes['SearchReviewsResponse'], ParentType, ContextType, RequireFields<QuerySearchReviewsArgs, 'filters' | 'entityId'>>;
   hasReviewed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<QueryHasReviewedArgs, 'entityId' | 'userId'>>;
   getCategory?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<QueryGetCategoryArgs, 'id'>>;
   getEntityOwnershipRequests?: Resolver<Array<Maybe<ResolversTypes['EntityOwnershipRequest']>>, ParentType, ContextType, RequireFields<QueryGetEntityOwnershipRequestsArgs, 'id'>>;

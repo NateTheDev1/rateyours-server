@@ -173,8 +173,10 @@ interface QueryGetEntityArgs {
 
 
 interface QuerySearchReviewsArgs {
+  filters: ReviewSearchFilters;
   entityId: Scalars['Int'];
   first?: Maybe<Scalars['Int']>;
+  query?: Maybe<Scalars['String']>;
 }
 
 
@@ -238,6 +240,12 @@ interface ReviewInput {
   rating: Scalars['Int'];
   specialContent?: Maybe<Scalars['String']>;
   entity: Scalars['Int'];
+}
+
+interface ReviewSearchFilters {
+  minRating: Scalars['Int'];
+  maxRating: Scalars['Int'];
+  sortBy: Scalars['String'];
 }
 
 interface ReviewSearchResponse {

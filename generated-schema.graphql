@@ -7,7 +7,7 @@ type Query {
   getCategories: [Category!]!
   search(filters: SearchFilters!, first: Int, query: String!): ReviewSearchResponse!
   getEntity(id: Int!): Entity!
-  searchReviews(entityId: Int!, first: Int): SearchReviewsResponse!
+  searchReviews(filters: ReviewSearchFilters!, entityId: Int!, first: Int, query: String): SearchReviewsResponse!
   hasReviewed(entityId: Int!, userId: Int!): Boolean!
   getCategory(id: Int!): Category!
   getEntityOwnershipRequests(id: Int!): [EntityOwnershipRequest]!
@@ -49,6 +49,12 @@ input SearchFilters {
   maxRating: Int!
   sortyBy: String!
   categoryRestriction: String
+}
+
+input ReviewSearchFilters {
+  minRating: Int!
+  maxRating: Int!
+  sortBy: String!
 }
 
 input ReviewInput {
