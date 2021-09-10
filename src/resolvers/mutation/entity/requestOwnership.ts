@@ -14,7 +14,7 @@ export const requestOwnership: Resolvers.MutationResolvers['requestOwnership'] =
 			throw new ApolloError('Entity does not exist', '400');
 		}
 
-		const userExists = await User.query().findById(args.entityId);
+		const userExists = await User.query().findById(args.userId);
 		if (!userExists) {
 			throw new ApolloError('User does not exist', '400');
 		}
