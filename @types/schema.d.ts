@@ -69,6 +69,7 @@ interface EntityOwnershipRequest {
   __typename?: 'EntityOwnershipRequest';
   id: Scalars['Int'];
   requestedBy: Scalars['Int'];
+  entity: Scalars['Int'];
   approved: Scalars['Boolean'];
 }
 
@@ -88,6 +89,7 @@ interface Mutation {
   addCategory: Category;
   addReview: Review;
   updateEntityViews: Scalars['Boolean'];
+  requestOwnership: Scalars['Boolean'];
   createUser: CreateUserReturn;
   login: CreateUserReturn;
   sendPasswordReset: Scalars['Boolean'];
@@ -110,6 +112,12 @@ interface MutationAddReviewArgs {
 interface MutationUpdateEntityViewsArgs {
   viewCount: Scalars['Int'];
   entityId: Scalars['Int'];
+}
+
+
+interface MutationRequestOwnershipArgs {
+  entityId: Scalars['Int'];
+  userId: Scalars['Int'];
 }
 
 
@@ -145,6 +153,7 @@ interface Query {
   searchReviews: SearchReviewsResponse;
   hasReviewed: Scalars['Boolean'];
   getCategory: Category;
+  getEntityOwnershipRequests: Array<Maybe<EntityOwnershipRequest>>;
   getUser: User;
   getUserActivity: UserActivity;
   getUserEntities: Array<Maybe<Entity>>;
@@ -176,6 +185,11 @@ interface QueryHasReviewedArgs {
 
 
 interface QueryGetCategoryArgs {
+  id: Scalars['Int'];
+}
+
+
+interface QueryGetEntityOwnershipRequestsArgs {
   id: Scalars['Int'];
 }
 
