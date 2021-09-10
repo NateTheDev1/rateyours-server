@@ -72,6 +72,7 @@ interface EntityOwnershipRequest {
   __typename?: 'EntityOwnershipRequest';
   id: Scalars['Int'];
   requestedBy: Scalars['Int'];
+  entity: Scalars['Int'];
   approved: Scalars['Boolean'];
 }
 
@@ -91,6 +92,7 @@ interface Mutation {
   addCategory: Category;
   addReview: Review;
   updateEntityViews: Scalars['Boolean'];
+  requestOwnership: Scalars['Boolean'];
   createUser: CreateUserReturn;
   login: CreateUserReturn;
   sendPasswordReset: Scalars['Boolean'];
@@ -113,6 +115,12 @@ interface MutationAddReviewArgs {
 interface MutationUpdateEntityViewsArgs {
   viewCount: Scalars['Int'];
   entityId: Scalars['Int'];
+}
+
+
+interface MutationRequestOwnershipArgs {
+  entityId: Scalars['Int'];
+  userId: Scalars['Int'];
 }
 
 
@@ -148,6 +156,7 @@ interface Query {
   searchReviews: SearchReviewsResponse;
   hasReviewed: Scalars['Boolean'];
   getCategory: Category;
+  getEntityOwnershipRequests: Array<Maybe<EntityOwnershipRequest>>;
   getUser: User;
   getUserActivity: UserActivity;
   getUserEntities: Array<Maybe<Entity>>;
@@ -179,6 +188,11 @@ interface QueryHasReviewedArgs {
 
 
 interface QueryGetCategoryArgs {
+  id: Scalars['Int'];
+}
+
+
+interface QueryGetEntityOwnershipRequestsArgs {
   id: Scalars['Int'];
 }
 
@@ -443,6 +457,7 @@ export type EntityResolvers<ContextType = any, ParentType extends ResolversParen
 export type EntityOwnershipRequestResolvers<ContextType = any, ParentType extends ResolversParentTypes['EntityOwnershipRequest'] = ResolversParentTypes['EntityOwnershipRequest']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   requestedBy?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  entity?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   approved?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -457,6 +472,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   addCategory?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<MutationAddCategoryArgs, 'category'>>;
   addReview?: Resolver<ResolversTypes['Review'], ParentType, ContextType, RequireFields<MutationAddReviewArgs, 'review' | 'hasReviewed'>>;
   updateEntityViews?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationUpdateEntityViewsArgs, 'viewCount' | 'entityId'>>;
+  requestOwnership?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationRequestOwnershipArgs, 'entityId' | 'userId'>>;
   createUser?: Resolver<ResolversTypes['CreateUserReturn'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'user'>>;
   login?: Resolver<ResolversTypes['CreateUserReturn'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'credentials'>>;
   sendPasswordReset?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationSendPasswordResetArgs, never>>;
@@ -471,6 +487,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   searchReviews?: Resolver<ResolversTypes['SearchReviewsResponse'], ParentType, ContextType, RequireFields<QuerySearchReviewsArgs, 'entityId'>>;
   hasReviewed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<QueryHasReviewedArgs, 'entityId' | 'userId'>>;
   getCategory?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<QueryGetCategoryArgs, 'id'>>;
+  getEntityOwnershipRequests?: Resolver<Array<Maybe<ResolversTypes['EntityOwnershipRequest']>>, ParentType, ContextType, RequireFields<QueryGetEntityOwnershipRequestsArgs, 'id'>>;
   getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
   getUserActivity?: Resolver<ResolversTypes['UserActivity'], ParentType, ContextType, RequireFields<QueryGetUserActivityArgs, 'id'>>;
   getUserEntities?: Resolver<Array<Maybe<ResolversTypes['Entity']>>, ParentType, ContextType, RequireFields<QueryGetUserEntitiesArgs, 'id'>>;
