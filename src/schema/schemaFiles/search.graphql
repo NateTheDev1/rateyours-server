@@ -9,6 +9,7 @@ type Query {
 	searchReviews(entityId: Int!, first: Int): SearchReviewsResponse!
 	hasReviewed(entityId: Int!, userId: Int!): Boolean!
 	getCategory(id: Int!): Category!
+	getEntityOwnershipRequests(id: Int!): [EntityOwnershipRequest]!
 }
 
 type SearchReviewsResponse {
@@ -20,6 +21,7 @@ type Mutation {
 	addCategory(category: AddCategoryInput!): Category!
 	addReview(review: ReviewInput!, hasReviewed: Boolean!): Review!
 	updateEntityViews(viewCount: Int!, entityId: Int!): Boolean!
+	requestOwnership(entityId: Int!, userId: Int!): Boolean!
 }
 
 type EntitySearchResponse {
@@ -105,5 +107,6 @@ type Entity {
 type EntityOwnershipRequest {
 	id: Int!
 	requestedBy: Int!
+	entity: Int!
 	approved: Boolean!
 }

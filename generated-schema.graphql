@@ -10,6 +10,7 @@ type Query {
   searchReviews(entityId: Int!, first: Int): SearchReviewsResponse!
   hasReviewed(entityId: Int!, userId: Int!): Boolean!
   getCategory(id: Int!): Category!
+  getEntityOwnershipRequests(id: Int!): [EntityOwnershipRequest]!
   getUser(id: Int!): User!
   getUserActivity(id: Int!): UserActivity!
   getUserEntities(id: Int!): [Entity]!
@@ -24,6 +25,7 @@ type Mutation {
   addCategory(category: AddCategoryInput!): Category!
   addReview(review: ReviewInput!, hasReviewed: Boolean!): Review!
   updateEntityViews(viewCount: Int!, entityId: Int!): Boolean!
+  requestOwnership(entityId: Int!, userId: Int!): Boolean!
   createUser(user: CreateUserInput!): CreateUserReturn!
   login(credentials: LoginInput!): CreateUserReturn!
   sendPasswordReset(email: String): Boolean!
@@ -114,6 +116,7 @@ type Entity {
 type EntityOwnershipRequest {
   id: Int!
   requestedBy: Int!
+  entity: Int!
   approved: Boolean!
 }
 
