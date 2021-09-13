@@ -33,9 +33,11 @@ export class PopularSearchService {
 			.where({ query: this.query })
 			.first();
 
-		await PopularSearches.query().patch({
-			query: this.query,
-			searches: exists.searches + 1
-		});
+		await PopularSearches.query()
+			.patch({
+				query: this.query,
+				searches: exists.searches + 1
+			})
+			.where({ query: this.query });
 	}
 }

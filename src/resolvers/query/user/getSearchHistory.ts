@@ -9,7 +9,9 @@ export const getSearchHistory: Resolvers.QueryResolvers['getSearchHistory'] =
 
 		verifyAuthentication(context);
 
-		const history = await SearchHistory.query().where({ user: args.id });
+		const history = await SearchHistory.query()
+			.where({ user: args.id })
+			.limit(5);
 
 		return history;
 	};

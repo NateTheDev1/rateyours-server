@@ -6,7 +6,7 @@ export const getPopularSearches: Resolvers.QueryResolvers['getPopularSearches'] 
 		context.logger.info('Query: getPopularSearches');
 
 		const popularSearches = await PopularSearches.query()
-			.limit(10)
+			.limit(5)
 			.orderBy('searches', 'DESC');
 
 		return popularSearches;
