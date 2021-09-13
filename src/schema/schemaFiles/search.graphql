@@ -15,6 +15,13 @@ type Query {
 	hasReviewed(entityId: Int!, userId: Int!): Boolean!
 	getCategory(id: Int!): Category!
 	getEntityOwnershipRequests(id: Int!): [EntityOwnershipRequest]!
+	getPopularSearches: [PopularSearch]!
+}
+
+type PopularSearch {
+	id: Int!
+	query: String!
+	searches: Int!
 }
 
 type SearchReviewsResponse {

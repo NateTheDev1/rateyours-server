@@ -11,9 +11,17 @@ type Query {
   hasReviewed(entityId: Int!, userId: Int!): Boolean!
   getCategory(id: Int!): Category!
   getEntityOwnershipRequests(id: Int!): [EntityOwnershipRequest]!
+  getPopularSearches: [PopularSearch]!
   getUser(id: Int!): User!
   getUserActivity(id: Int!): UserActivity!
   getUserEntities(id: Int!): [Entity]!
+  getSearchHistory(id: Int!): [SearchHistory]!
+}
+
+type PopularSearch {
+  id: Int!
+  query: String!
+  searches: Int!
 }
 
 type SearchReviewsResponse {
@@ -31,6 +39,7 @@ type Mutation {
   sendPasswordReset(email: String): Boolean!
   resetPassword(newCredentials: ResetPasswordCredentials!): Boolean!
   updateUserDetails(patch: UpdateUserDetailsInput!): Boolean!
+  deleteSearchHistory(id: Int!): Boolean!
 }
 
 type EntitySearchResponse {
@@ -124,6 +133,12 @@ type EntityOwnershipRequest {
   requestedBy: Int!
   entity: Int!
   approved: Boolean!
+}
+
+type SearchHistory {
+  id: Int!
+  query: String!
+  user: Int!
 }
 
 input UpdateUserDetailsInput {

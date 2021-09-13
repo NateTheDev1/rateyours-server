@@ -2,6 +2,7 @@ type Query {
 	getUser(id: Int!): User!
 	getUserActivity(id: Int!): UserActivity!
 	getUserEntities(id: Int!): [Entity]!
+	getSearchHistory(id: Int!): [SearchHistory]!
 }
 
 type Mutation {
@@ -10,6 +11,13 @@ type Mutation {
 	sendPasswordReset(email: String): Boolean!
 	resetPassword(newCredentials: ResetPasswordCredentials!): Boolean!
 	updateUserDetails(patch: UpdateUserDetailsInput!): Boolean!
+	deleteSearchHistory(id: Int!): Boolean!
+}
+
+type SearchHistory {
+	id: Int!
+	query: String!
+	user: Int!
 }
 
 input UpdateUserDetailsInput {

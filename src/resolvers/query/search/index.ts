@@ -1,8 +1,14 @@
 import Entity from '../../../db/models/Entity';
 import { getCategories } from './getCategories';
 import { getCategory } from './getCategory';
+import { getPopularSearches } from './getPopularSearches';
 import { search } from './search';
-export const searchQueryResolvers = { getCategories, search, getCategory };
+export const searchQueryResolvers = {
+	getCategories,
+	search,
+	getCategory,
+	getPopularSearches
+};
 
 export const CategoryResolvers: Resolvers.CategoryResolvers = {
 	//@ts-ignore
