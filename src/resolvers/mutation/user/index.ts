@@ -1,4 +1,5 @@
 import { createUser } from './createUser';
+import { deleteSearchHistory } from './deleteSearchHistory';
 import { login } from './login';
 import { resetPassword } from './resetPassword';
 import { sendPasswordReset } from './sendPasswordReset';
@@ -9,5 +10,6 @@ export const userMutationResolvers = {
 	login,
 	sendPasswordReset,
 	resetPassword,
-	updateUserDetails
+	updateUserDetails,
+	deleteSearchHistory
 };

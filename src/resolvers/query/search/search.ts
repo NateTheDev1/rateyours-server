@@ -1,6 +1,8 @@
 import { raw } from 'objection';
 import Entity from '../../../db/models/Entity';
 import Reviews from '../../../db/models/Reviews';
+import SearchHistory from '../../../db/models/SearchHistory';
+import { PopularSearchService } from '../../../services/PopularSearchService';
 
 //@ts-ignore
 export const search: Resolvers.QueryResolvers['search'] = async (
@@ -11,6 +13,25 @@ export const search: Resolvers.QueryResolvers['search'] = async (
 	context.logger.info('Query: search');
 
 	const { minRating, maxRating, sortyBy, categoryRestriction } = args.filters;
+
+	// User search history tracking
+	if (context.authenticated && context.session) {
+		await SearchHistory.query().insert({
+			query: args.query,
+			user: context.session.userId
+		});
+	}
+
+	// Popular searches tracking
+	const searchService = new PopularSearchService(args.query);
+
+	const hasBeenSearched = await searchService.exists();
+
+	if (hasBeenSearched) {
+		await searchService.update();
+	} else {
+		await searchService.insert();
+	}
 
 	let entities = [];
 	let total = 0;

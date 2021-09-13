@@ -95,6 +95,7 @@ interface Mutation {
   sendPasswordReset: Scalars['Boolean'];
   resetPassword: Scalars['Boolean'];
   updateUserDetails: Scalars['Boolean'];
+  deleteSearchHistory: Scalars['Boolean'];
 }
 
 
@@ -145,6 +146,18 @@ interface MutationUpdateUserDetailsArgs {
   patch: UpdateUserDetailsInput;
 }
 
+
+interface MutationDeleteSearchHistoryArgs {
+  id: Scalars['Int'];
+}
+
+interface PopularSearch {
+  __typename?: 'PopularSearch';
+  id: Scalars['Int'];
+  query: Scalars['String'];
+  searches: Scalars['Int'];
+}
+
 interface Query {
   __typename?: 'Query';
   getCategories: Array<Category>;
@@ -154,9 +167,11 @@ interface Query {
   hasReviewed: Scalars['Boolean'];
   getCategory: Category;
   getEntityOwnershipRequests: Array<Maybe<EntityOwnershipRequest>>;
+  getPopularSearches: Array<Maybe<PopularSearch>>;
   getUser: User;
   getUserActivity: UserActivity;
   getUserEntities: Array<Maybe<Entity>>;
+  getSearchHistory: Array<Maybe<SearchHistory>>;
 }
 
 
@@ -210,6 +225,11 @@ interface QueryGetUserEntitiesArgs {
   id: Scalars['Int'];
 }
 
+
+interface QueryGetSearchHistoryArgs {
+  id: Scalars['Int'];
+}
+
 interface ResetPasswordCredentials {
   email: Scalars['String'];
   newPassword: Scalars['String'];
@@ -260,6 +280,13 @@ interface SearchFilters {
   maxRating: Scalars['Int'];
   sortyBy: Scalars['String'];
   categoryRestriction?: Maybe<Scalars['String']>;
+}
+
+interface SearchHistory {
+  __typename?: 'SearchHistory';
+  id: Scalars['Int'];
+  query: Scalars['String'];
+  user: Scalars['Int'];
 }
 
 interface SearchReviewsResponse {
