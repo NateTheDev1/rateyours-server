@@ -6,8 +6,8 @@ export const getPopularSearches: Resolvers.QueryResolvers['getPopularSearches'] 
 		context.logger.info('Query: getPopularSearches');
 
 		const popularSearches = await PopularSearches.query()
-			.limit(5)
-			.orderBy('searches', 'DESC');
+			.orderBy('searches', 'DESC')
+			.limit(5);
 
 		return popularSearches;
 	};
