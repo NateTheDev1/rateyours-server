@@ -16,6 +16,18 @@ export const search: Resolvers.QueryResolvers['search'] = async (
 
 	// User search history tracking
 	if (context.authenticated && context.session) {
+		const history = await SearchHistory.query()
+			.where({
+				user: context.session.userId
+			})
+			.orderBy('id', 'DESC');
+
+		if (history.length === 5) {
+			await SearchHistory.query().deleteById(
+				history[history.length - 1].id
+			);
+		}
+
 		await SearchHistory.query().insert({
 			query: args.query,
 			user: context.session.userId
