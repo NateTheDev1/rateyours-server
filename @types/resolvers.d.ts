@@ -93,6 +93,7 @@ interface Mutation {
   addReview: Review;
   updateEntityViews: Scalars['Boolean'];
   requestOwnership: Scalars['Boolean'];
+  voteReview: Scalars['Boolean'];
   createUser: CreateUserReturn;
   login: CreateUserReturn;
   sendPasswordReset: Scalars['Boolean'];
@@ -122,6 +123,11 @@ interface MutationUpdateEntityViewsArgs {
 interface MutationRequestOwnershipArgs {
   entityId: Scalars['Int'];
   userId: Scalars['Int'];
+}
+
+
+interface MutationVoteReviewArgs {
+  vote: VoteInput;
 }
 
 
@@ -252,6 +258,8 @@ interface Review {
   rating: Scalars['Int'];
   specialContent?: Maybe<Scalars['String']>;
   entity: Scalars['Int'];
+  upvotes: Scalars['Int'];
+  downvotes: Scalars['Int'];
 }
 
 interface ReviewInput {
@@ -318,6 +326,17 @@ interface UserActivity {
   __typename?: 'UserActivity';
   reviews: Array<Maybe<Review>>;
 }
+
+interface VoteInput {
+  userId: Scalars['Int'];
+  voteType: VoteType;
+  reviewId: Scalars['Int'];
+}
+
+type VoteType =
+  | 'UPVOTE'
+  | 'DOWNVOTE'
+  | 'REMOVE';
 
 
 
@@ -429,6 +448,8 @@ export type ResolversTypes = {
   UpdateUserDetailsInput: UpdateUserDetailsInput;
   User: ResolverTypeWrapper<User>;
   UserActivity: ResolverTypeWrapper<UserActivity>;
+  VoteInput: VoteInput;
+  VoteType: VoteType;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -460,6 +481,7 @@ export type ResolversParentTypes = {
   UpdateUserDetailsInput: UpdateUserDetailsInput;
   User: User;
   UserActivity: UserActivity;
+  VoteInput: VoteInput;
 };
 
 export type CategoryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Category'] = ResolversParentTypes['Category']> = {
@@ -514,6 +536,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   addReview?: Resolver<ResolversTypes['Review'], ParentType, ContextType, RequireFields<MutationAddReviewArgs, 'review' | 'hasReviewed'>>;
   updateEntityViews?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationUpdateEntityViewsArgs, 'viewCount' | 'entityId'>>;
   requestOwnership?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationRequestOwnershipArgs, 'entityId' | 'userId'>>;
+  voteReview?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationVoteReviewArgs, 'vote'>>;
   createUser?: Resolver<ResolversTypes['CreateUserReturn'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'user'>>;
   login?: Resolver<ResolversTypes['CreateUserReturn'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'credentials'>>;
   sendPasswordReset?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationSendPasswordResetArgs, never>>;
@@ -556,6 +579,8 @@ export type ReviewResolvers<ContextType = any, ParentType extends ResolversParen
   rating?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   specialContent?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   entity?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  upvotes?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  downvotes?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

@@ -34,6 +34,19 @@ type Mutation {
 	addReview(review: ReviewInput!, hasReviewed: Boolean!): Review!
 	updateEntityViews(viewCount: Int!, entityId: Int!): Boolean!
 	requestOwnership(entityId: Int!, userId: Int!): Boolean!
+	voteReview(vote: VoteInput!): Boolean!
+}
+
+enum VoteType {
+	UPVOTE
+	DOWNVOTE
+	REMOVE
+}
+
+input VoteInput {
+	userId: Int!
+	voteType: VoteType!
+	reviewId: Int!
 }
 
 type EntitySearchResponse {
@@ -111,6 +124,8 @@ type Review {
 	rating: Int!
 	specialContent: String
 	entity: Int!
+	upvotes: Int!
+	downvotes: Int!
 }
 
 type Entity {

@@ -90,6 +90,7 @@ interface Mutation {
   addReview: Review;
   updateEntityViews: Scalars['Boolean'];
   requestOwnership: Scalars['Boolean'];
+  voteReview: Scalars['Boolean'];
   createUser: CreateUserReturn;
   login: CreateUserReturn;
   sendPasswordReset: Scalars['Boolean'];
@@ -119,6 +120,11 @@ interface MutationUpdateEntityViewsArgs {
 interface MutationRequestOwnershipArgs {
   entityId: Scalars['Int'];
   userId: Scalars['Int'];
+}
+
+
+interface MutationVoteReviewArgs {
+  vote: VoteInput;
 }
 
 
@@ -249,6 +255,8 @@ interface Review {
   rating: Scalars['Int'];
   specialContent?: Maybe<Scalars['String']>;
   entity: Scalars['Int'];
+  upvotes: Scalars['Int'];
+  downvotes: Scalars['Int'];
 }
 
 interface ReviewInput {
@@ -315,5 +323,16 @@ interface UserActivity {
   __typename?: 'UserActivity';
   reviews: Array<Maybe<Review>>;
 }
+
+interface VoteInput {
+  userId: Scalars['Int'];
+  voteType: VoteType;
+  reviewId: Scalars['Int'];
+}
+
+type VoteType =
+  | 'UPVOTE'
+  | 'DOWNVOTE'
+  | 'REMOVE';
 
 } } export {};
