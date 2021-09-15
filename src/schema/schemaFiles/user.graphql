@@ -3,6 +3,7 @@ type Query {
 	getUserActivity(id: Int!): UserActivity!
 	getUserEntities(id: Int!): [Entity]!
 	getSearchHistory(id: Int!): [SearchHistory]!
+	getReviewVotes(id: Int!): [ReviewVote]!
 }
 
 type Mutation {

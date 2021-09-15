@@ -1,3 +1,4 @@
+import { getReviewVotes } from './getReviewVotes';
 import { getSearchHistory } from './getSearchHistory';
 import { getUser } from './getUser';
 import { getUserActivity } from './getUserActivity';
@@ -7,5 +8,6 @@ export const userQueryResolvers = {
 	getUser: getUser,
 	getUserActivity,
 	getUserEntities,
-	getSearchHistory
+	getSearchHistory,
+	getReviewVotes
 };
