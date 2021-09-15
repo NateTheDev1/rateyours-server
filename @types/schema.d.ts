@@ -90,6 +90,7 @@ interface Mutation {
   addReview: Review;
   updateEntityViews: Scalars['Boolean'];
   requestOwnership: Scalars['Boolean'];
+  voteReview: Scalars['Boolean'];
   createUser: CreateUserReturn;
   login: CreateUserReturn;
   sendPasswordReset: Scalars['Boolean'];
@@ -119,6 +120,11 @@ interface MutationUpdateEntityViewsArgs {
 interface MutationRequestOwnershipArgs {
   entityId: Scalars['Int'];
   userId: Scalars['Int'];
+}
+
+
+interface MutationVoteReviewArgs {
+  vote: VoteInput;
 }
 
 
@@ -172,6 +178,7 @@ interface Query {
   getUserActivity: UserActivity;
   getUserEntities: Array<Maybe<Entity>>;
   getSearchHistory: Array<Maybe<SearchHistory>>;
+  getReviewVotes: Array<Maybe<ReviewVote>>;
 }
 
 
@@ -230,6 +237,11 @@ interface QueryGetSearchHistoryArgs {
   id: Scalars['Int'];
 }
 
+
+interface QueryGetReviewVotesArgs {
+  id: Scalars['Int'];
+}
+
 interface ResetPasswordCredentials {
   email: Scalars['String'];
   newPassword: Scalars['String'];
@@ -249,6 +261,8 @@ interface Review {
   rating: Scalars['Int'];
   specialContent?: Maybe<Scalars['String']>;
   entity: Scalars['Int'];
+  upvotes: Scalars['Int'];
+  downvotes: Scalars['Int'];
 }
 
 interface ReviewInput {
@@ -273,6 +287,14 @@ interface ReviewSearchResponse {
   reviews: Array<Maybe<Review>>;
   entities: Array<Maybe<Entity>>;
   total: Scalars['Int'];
+}
+
+interface ReviewVote {
+  __typename?: 'ReviewVote';
+  id: Scalars['Int'];
+  votedDate: Scalars['Int'];
+  voteType?: Maybe<VoteType>;
+  reviewId: Scalars['Int'];
 }
 
 interface SearchFilters {
@@ -315,5 +337,16 @@ interface UserActivity {
   __typename?: 'UserActivity';
   reviews: Array<Maybe<Review>>;
 }
+
+interface VoteInput {
+  userId: Scalars['Int'];
+  voteType: VoteType;
+  reviewId: Scalars['Int'];
+}
+
+type VoteType =
+  | 'UPVOTE'
+  | 'DOWNVOTE'
+  | 'REMOVE';
 
 } } export {};
