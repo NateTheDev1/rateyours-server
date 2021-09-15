@@ -112,6 +112,13 @@ type CategoryTopTen {
 	mostRecent: [Entity]!
 }
 
+type ReviewVote {
+	id: Int!
+	votedDate: Int!
+	voteType: VoteType
+	reviewId: Int!
+}
+
 type Review {
 	id: Int!
 	type: String!

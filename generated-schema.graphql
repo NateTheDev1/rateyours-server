@@ -16,6 +16,7 @@ type Query {
   getUserActivity(id: Int!): UserActivity!
   getUserEntities(id: Int!): [Entity]!
   getSearchHistory(id: Int!): [SearchHistory]!
+  getReviewVotes(id: Int!): [ReviewVote]!
 }
 
 type PopularSearch {
@@ -116,6 +117,13 @@ type Category {
 type CategoryTopTen {
   mostViewed: [Entity]!
   mostRecent: [Entity]!
+}
+
+type ReviewVote {
+  id: Int!
+  votedDate: Int!
+  voteType: VoteType
+  reviewId: Int!
 }
 
 type Review {

@@ -181,6 +181,7 @@ interface Query {
   getUserActivity: UserActivity;
   getUserEntities: Array<Maybe<Entity>>;
   getSearchHistory: Array<Maybe<SearchHistory>>;
+  getReviewVotes: Array<Maybe<ReviewVote>>;
 }
 
 
@@ -239,6 +240,11 @@ interface QueryGetSearchHistoryArgs {
   id: Scalars['Int'];
 }
 
+
+interface QueryGetReviewVotesArgs {
+  id: Scalars['Int'];
+}
+
 interface ResetPasswordCredentials {
   email: Scalars['String'];
   newPassword: Scalars['String'];
@@ -284,6 +290,14 @@ interface ReviewSearchResponse {
   reviews: Array<Maybe<Review>>;
   entities: Array<Maybe<Entity>>;
   total: Scalars['Int'];
+}
+
+interface ReviewVote {
+  __typename?: 'ReviewVote';
+  id: Scalars['Int'];
+  votedDate: Scalars['Int'];
+  voteType?: Maybe<VoteType>;
+  reviewId: Scalars['Int'];
 }
 
 interface SearchFilters {
@@ -442,6 +456,7 @@ export type ResolversTypes = {
   ReviewInput: ReviewInput;
   ReviewSearchFilters: ReviewSearchFilters;
   ReviewSearchResponse: ResolverTypeWrapper<ReviewSearchResponse>;
+  ReviewVote: ResolverTypeWrapper<ReviewVote>;
   SearchFilters: SearchFilters;
   SearchHistory: ResolverTypeWrapper<SearchHistory>;
   SearchReviewsResponse: ResolverTypeWrapper<SearchReviewsResponse>;
@@ -475,6 +490,7 @@ export type ResolversParentTypes = {
   ReviewInput: ReviewInput;
   ReviewSearchFilters: ReviewSearchFilters;
   ReviewSearchResponse: ReviewSearchResponse;
+  ReviewVote: ReviewVote;
   SearchFilters: SearchFilters;
   SearchHistory: SearchHistory;
   SearchReviewsResponse: SearchReviewsResponse;
@@ -565,6 +581,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getUserActivity?: Resolver<ResolversTypes['UserActivity'], ParentType, ContextType, RequireFields<QueryGetUserActivityArgs, 'id'>>;
   getUserEntities?: Resolver<Array<Maybe<ResolversTypes['Entity']>>, ParentType, ContextType, RequireFields<QueryGetUserEntitiesArgs, 'id'>>;
   getSearchHistory?: Resolver<Array<Maybe<ResolversTypes['SearchHistory']>>, ParentType, ContextType, RequireFields<QueryGetSearchHistoryArgs, 'id'>>;
+  getReviewVotes?: Resolver<Array<Maybe<ResolversTypes['ReviewVote']>>, ParentType, ContextType, RequireFields<QueryGetReviewVotesArgs, 'id'>>;
 };
 
 export type ReviewResolvers<ContextType = any, ParentType extends ResolversParentTypes['Review'] = ResolversParentTypes['Review']> = {
@@ -588,6 +605,14 @@ export type ReviewSearchResponseResolvers<ContextType = any, ParentType extends 
   reviews?: Resolver<Array<Maybe<ResolversTypes['Review']>>, ParentType, ContextType>;
   entities?: Resolver<Array<Maybe<ResolversTypes['Entity']>>, ParentType, ContextType>;
   total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ReviewVoteResolvers<ContextType = any, ParentType extends ResolversParentTypes['ReviewVote'] = ResolversParentTypes['ReviewVote']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  votedDate?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  voteType?: Resolver<Maybe<ResolversTypes['VoteType']>, ParentType, ContextType>;
+  reviewId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -630,6 +655,7 @@ export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
   Review?: ReviewResolvers<ContextType>;
   ReviewSearchResponse?: ReviewSearchResponseResolvers<ContextType>;
+  ReviewVote?: ReviewVoteResolvers<ContextType>;
   SearchHistory?: SearchHistoryResolvers<ContextType>;
   SearchReviewsResponse?: SearchReviewsResponseResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
