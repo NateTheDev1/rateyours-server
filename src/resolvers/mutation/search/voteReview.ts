@@ -39,5 +39,13 @@ export const voteReview: Resolvers.MutationResolvers['voteReview'] = async (
 			}
 		}
 	}
+
+	if (args.vote.voteType === 'REMOVE') {
+		await ReviewVotes.query().delete().where({
+			reviewId: args.vote.reviewId,
+			votedBy: args.vote.userId
+		});
+	}
+
 	return true;
 };

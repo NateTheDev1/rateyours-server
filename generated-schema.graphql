@@ -121,7 +121,7 @@ type CategoryTopTen {
 
 type ReviewVote {
   id: Int!
-  votedDate: Int!
+  votedDate: String!
   voteType: VoteType
   reviewId: Int!
 }

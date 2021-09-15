@@ -292,7 +292,7 @@ interface ReviewSearchResponse {
 interface ReviewVote {
   __typename?: 'ReviewVote';
   id: Scalars['Int'];
-  votedDate: Scalars['Int'];
+  votedDate: Scalars['String'];
   voteType?: Maybe<VoteType>;
   reviewId: Scalars['Int'];
 }

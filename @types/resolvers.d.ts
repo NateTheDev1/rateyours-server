@@ -295,7 +295,7 @@ interface ReviewSearchResponse {
 interface ReviewVote {
   __typename?: 'ReviewVote';
   id: Scalars['Int'];
-  votedDate: Scalars['Int'];
+  votedDate: Scalars['String'];
   voteType?: Maybe<VoteType>;
   reviewId: Scalars['Int'];
 }
@@ -610,7 +610,7 @@ export type ReviewSearchResponseResolvers<ContextType = any, ParentType extends 
 
 export type ReviewVoteResolvers<ContextType = any, ParentType extends ResolversParentTypes['ReviewVote'] = ResolversParentTypes['ReviewVote']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  votedDate?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  votedDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   voteType?: Resolver<Maybe<ResolversTypes['VoteType']>, ParentType, ContextType>;
   reviewId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
