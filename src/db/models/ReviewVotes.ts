@@ -5,7 +5,7 @@ export type VoteType = 'UPVOTE' | 'DOWNVOTE' | 'REMOVE';
 export class ReviewVotes extends BaseModel {
 	id!: number;
 	votedBy!: number;
-	votedDate!: number;
+	votedDate!: string;
 	voteType!: VoteType;
 	reviewId!: number;
 
