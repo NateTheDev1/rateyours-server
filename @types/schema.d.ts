@@ -91,6 +91,7 @@ interface Mutation {
   updateEntityViews: Scalars['Boolean'];
   requestOwnership: Scalars['Boolean'];
   voteReview: Scalars['Boolean'];
+  requestProfilePriority: Scalars['Boolean'];
   createUser: CreateUserReturn;
   login: CreateUserReturn;
   sendPasswordReset: Scalars['Boolean'];
@@ -128,6 +129,11 @@ interface MutationVoteReviewArgs {
 }
 
 
+interface MutationRequestProfilePriorityArgs {
+  request: ProfilePriorityInput;
+}
+
+
 interface MutationCreateUserArgs {
   user: CreateUserInput;
 }
@@ -162,6 +168,12 @@ interface PopularSearch {
   id: Scalars['Int'];
   query: Scalars['String'];
   searches: Scalars['Int'];
+}
+
+interface ProfilePriorityInput {
+  entityId: Scalars['Int'];
+  requestedBy: Scalars['Int'];
+  why?: Maybe<Scalars['String']>;
 }
 
 interface Query {

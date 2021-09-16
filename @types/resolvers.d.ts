@@ -94,6 +94,7 @@ interface Mutation {
   updateEntityViews: Scalars['Boolean'];
   requestOwnership: Scalars['Boolean'];
   voteReview: Scalars['Boolean'];
+  requestProfilePriority: Scalars['Boolean'];
   createUser: CreateUserReturn;
   login: CreateUserReturn;
   sendPasswordReset: Scalars['Boolean'];
@@ -131,6 +132,11 @@ interface MutationVoteReviewArgs {
 }
 
 
+interface MutationRequestProfilePriorityArgs {
+  request: ProfilePriorityInput;
+}
+
+
 interface MutationCreateUserArgs {
   user: CreateUserInput;
 }
@@ -165,6 +171,12 @@ interface PopularSearch {
   id: Scalars['Int'];
   query: Scalars['String'];
   searches: Scalars['Int'];
+}
+
+interface ProfilePriorityInput {
+  entityId: Scalars['Int'];
+  requestedBy: Scalars['Int'];
+  why?: Maybe<Scalars['String']>;
 }
 
 interface Query {
@@ -450,6 +462,7 @@ export type ResolversTypes = {
   LoginInput: LoginInput;
   Mutation: ResolverTypeWrapper<{}>;
   PopularSearch: ResolverTypeWrapper<PopularSearch>;
+  ProfilePriorityInput: ProfilePriorityInput;
   Query: ResolverTypeWrapper<{}>;
   ResetPasswordCredentials: ResetPasswordCredentials;
   Review: ResolverTypeWrapper<Review>;
@@ -484,6 +497,7 @@ export type ResolversParentTypes = {
   LoginInput: LoginInput;
   Mutation: {};
   PopularSearch: PopularSearch;
+  ProfilePriorityInput: ProfilePriorityInput;
   Query: {};
   ResetPasswordCredentials: ResetPasswordCredentials;
   Review: Review;
@@ -553,6 +567,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   updateEntityViews?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationUpdateEntityViewsArgs, 'viewCount' | 'entityId'>>;
   requestOwnership?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationRequestOwnershipArgs, 'entityId' | 'userId'>>;
   voteReview?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationVoteReviewArgs, 'vote'>>;
+  requestProfilePriority?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationRequestProfilePriorityArgs, 'request'>>;
   createUser?: Resolver<ResolversTypes['CreateUserReturn'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'user'>>;
   login?: Resolver<ResolversTypes['CreateUserReturn'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'credentials'>>;
   sendPasswordReset?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationSendPasswordResetArgs, never>>;
