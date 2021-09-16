@@ -4,6 +4,7 @@ type Query {
 	getUserEntities(id: Int!): [Entity]!
 	getSearchHistory(id: Int!): [SearchHistory]!
 	getReviewVotes(id: Int!): [ReviewVote]!
+	hasRequestedProfilePriority(entityId: Int!): Boolean!
 }
 
 type Mutation {

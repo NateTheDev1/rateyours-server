@@ -191,6 +191,7 @@ interface Query {
   getUserEntities: Array<Maybe<Entity>>;
   getSearchHistory: Array<Maybe<SearchHistory>>;
   getReviewVotes: Array<Maybe<ReviewVote>>;
+  hasRequestedProfilePriority: Scalars['Boolean'];
 }
 
 
@@ -252,6 +253,11 @@ interface QueryGetSearchHistoryArgs {
 
 interface QueryGetReviewVotesArgs {
   id: Scalars['Int'];
+}
+
+
+interface QueryHasRequestedProfilePriorityArgs {
+  entityId: Scalars['Int'];
 }
 
 interface ResetPasswordCredentials {

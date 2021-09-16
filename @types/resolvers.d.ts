@@ -194,6 +194,7 @@ interface Query {
   getUserEntities: Array<Maybe<Entity>>;
   getSearchHistory: Array<Maybe<SearchHistory>>;
   getReviewVotes: Array<Maybe<ReviewVote>>;
+  hasRequestedProfilePriority: Scalars['Boolean'];
 }
 
 
@@ -255,6 +256,11 @@ interface QueryGetSearchHistoryArgs {
 
 interface QueryGetReviewVotesArgs {
   id: Scalars['Int'];
+}
+
+
+interface QueryHasRequestedProfilePriorityArgs {
+  entityId: Scalars['Int'];
 }
 
 interface ResetPasswordCredentials {
@@ -597,6 +603,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getUserEntities?: Resolver<Array<Maybe<ResolversTypes['Entity']>>, ParentType, ContextType, RequireFields<QueryGetUserEntitiesArgs, 'id'>>;
   getSearchHistory?: Resolver<Array<Maybe<ResolversTypes['SearchHistory']>>, ParentType, ContextType, RequireFields<QueryGetSearchHistoryArgs, 'id'>>;
   getReviewVotes?: Resolver<Array<Maybe<ResolversTypes['ReviewVote']>>, ParentType, ContextType, RequireFields<QueryGetReviewVotesArgs, 'id'>>;
+  hasRequestedProfilePriority?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<QueryHasRequestedProfilePriorityArgs, 'entityId'>>;
 };
 
 export type ReviewResolvers<ContextType = any, ParentType extends ResolversParentTypes['Review'] = ResolversParentTypes['Review']> = {
