@@ -35,12 +35,19 @@ type Mutation {
 	updateEntityViews(viewCount: Int!, entityId: Int!): Boolean!
 	requestOwnership(entityId: Int!, userId: Int!): Boolean!
 	voteReview(vote: VoteInput!): Boolean!
+	requestProfilePriority(request: ProfilePriorityInput!): Boolean!
 }
 
 enum VoteType {
 	UPVOTE
 	DOWNVOTE
 	REMOVE
+}
+
+input ProfilePriorityInput {
+	entityId: Int!
+	requestedBy: Int!
+	why: String
 }
 
 input VoteInput {

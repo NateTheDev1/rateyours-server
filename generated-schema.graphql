@@ -17,6 +17,7 @@ type Query {
   getUserEntities(id: Int!): [Entity]!
   getSearchHistory(id: Int!): [SearchHistory]!
   getReviewVotes(id: Int!): [ReviewVote]!
+  hasRequestedProfilePriority(entityId: Int!): Boolean!
 }
 
 type PopularSearch {
@@ -36,6 +37,7 @@ type Mutation {
   updateEntityViews(viewCount: Int!, entityId: Int!): Boolean!
   requestOwnership(entityId: Int!, userId: Int!): Boolean!
   voteReview(vote: VoteInput!): Boolean!
+  requestProfilePriority(request: ProfilePriorityInput!): Boolean!
   createUser(user: CreateUserInput!): CreateUserReturn!
   login(credentials: LoginInput!): CreateUserReturn!
   sendPasswordReset(email: String): Boolean!
@@ -48,6 +50,12 @@ enum VoteType {
   UPVOTE
   DOWNVOTE
   REMOVE
+}
+
+input ProfilePriorityInput {
+  entityId: Int!
+  requestedBy: Int!
+  why: String
 }
 
 input VoteInput {

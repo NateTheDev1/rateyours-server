@@ -91,6 +91,7 @@ interface Mutation {
   updateEntityViews: Scalars['Boolean'];
   requestOwnership: Scalars['Boolean'];
   voteReview: Scalars['Boolean'];
+  requestProfilePriority: Scalars['Boolean'];
   createUser: CreateUserReturn;
   login: CreateUserReturn;
   sendPasswordReset: Scalars['Boolean'];
@@ -125,6 +126,11 @@ interface MutationRequestOwnershipArgs {
 
 interface MutationVoteReviewArgs {
   vote: VoteInput;
+}
+
+
+interface MutationRequestProfilePriorityArgs {
+  request: ProfilePriorityInput;
 }
 
 
@@ -164,6 +170,12 @@ interface PopularSearch {
   searches: Scalars['Int'];
 }
 
+interface ProfilePriorityInput {
+  entityId: Scalars['Int'];
+  requestedBy: Scalars['Int'];
+  why?: Maybe<Scalars['String']>;
+}
+
 interface Query {
   __typename?: 'Query';
   getCategories: Array<Category>;
@@ -179,6 +191,7 @@ interface Query {
   getUserEntities: Array<Maybe<Entity>>;
   getSearchHistory: Array<Maybe<SearchHistory>>;
   getReviewVotes: Array<Maybe<ReviewVote>>;
+  hasRequestedProfilePriority: Scalars['Boolean'];
 }
 
 
@@ -240,6 +253,11 @@ interface QueryGetSearchHistoryArgs {
 
 interface QueryGetReviewVotesArgs {
   id: Scalars['Int'];
+}
+
+
+interface QueryHasRequestedProfilePriorityArgs {
+  entityId: Scalars['Int'];
 }
 
 interface ResetPasswordCredentials {
