@@ -18,7 +18,7 @@ export const resetPassword: Resolvers.MutationResolvers['resetPassword'] =
 
 		await User.query()
 			.where({ email: existingCode.forEmail })
-			.patch({
+			.update({
 				password: await new AuthenticationService(
 					args.newCredentials.newPassword
 				).hashPassword()
