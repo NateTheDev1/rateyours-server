@@ -1,5 +1,5 @@
-import { randomUUID } from 'crypto';
 import User from '../../../db/models/User';
+import { v4 as uuidv4 } from 'uuid';
 import sgMail from '@sendgrid/mail';
 import { PasswordResets } from '../../../db/models/PasswordResets';
 
@@ -12,7 +12,7 @@ export const sendPasswordReset: Resolvers.MutationResolvers['sendPasswordReset']
 			throw new Error('No User!');
 		}
 
-		const code = randomUUID();
+		const code = uuidv4();
 
 		try {
 			await PasswordResets.query()
