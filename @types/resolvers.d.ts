@@ -95,6 +95,8 @@ interface Mutation {
   requestOwnership: Scalars['Boolean'];
   voteReview: Scalars['Boolean'];
   requestProfilePriority: Scalars['Boolean'];
+  sendSupportRequest: Scalars['Boolean'];
+  resolveSupportRequest: Scalars['Boolean'];
   createUser: CreateUserReturn;
   login: CreateUserReturn;
   sendPasswordReset: Scalars['Boolean'];
@@ -134,6 +136,16 @@ interface MutationVoteReviewArgs {
 
 interface MutationRequestProfilePriorityArgs {
   request: ProfilePriorityInput;
+}
+
+
+interface MutationSendSupportRequestArgs {
+  request: SupportRequestInput;
+}
+
+
+interface MutationResolveSupportRequestArgs {
+  id: Scalars['Int'];
 }
 
 
@@ -189,6 +201,7 @@ interface Query {
   getCategory: Category;
   getEntityOwnershipRequests: Array<Maybe<EntityOwnershipRequest>>;
   getPopularSearches: Array<Maybe<PopularSearch>>;
+  getSupportRequests: Array<Maybe<SupportRequest>>;
   getUser: User;
   getUserActivity: UserActivity;
   getUserEntities: Array<Maybe<Entity>>;
@@ -338,6 +351,21 @@ interface SearchReviewsResponse {
   total: Scalars['Int'];
 }
 
+interface SupportRequest {
+  __typename?: 'SupportRequest';
+  id: Scalars['Int'];
+  title: Scalars['String'];
+  body: Scalars['String'];
+  email: Scalars['String'];
+  resolved: Scalars['Boolean'];
+}
+
+interface SupportRequestInput {
+  title: Scalars['String'];
+  body: Scalars['String'];
+  email: Scalars['String'];
+}
+
 interface UpdateUserDetailsInput {
   userId: Scalars['Int'];
   fullName?: Maybe<Scalars['String']>;
@@ -479,6 +507,8 @@ export type ResolversTypes = {
   SearchFilters: SearchFilters;
   SearchHistory: ResolverTypeWrapper<SearchHistory>;
   SearchReviewsResponse: ResolverTypeWrapper<SearchReviewsResponse>;
+  SupportRequest: ResolverTypeWrapper<SupportRequest>;
+  SupportRequestInput: SupportRequestInput;
   UpdateUserDetailsInput: UpdateUserDetailsInput;
   User: ResolverTypeWrapper<User>;
   UserActivity: ResolverTypeWrapper<UserActivity>;
@@ -514,6 +544,8 @@ export type ResolversParentTypes = {
   SearchFilters: SearchFilters;
   SearchHistory: SearchHistory;
   SearchReviewsResponse: SearchReviewsResponse;
+  SupportRequest: SupportRequest;
+  SupportRequestInput: SupportRequestInput;
   UpdateUserDetailsInput: UpdateUserDetailsInput;
   User: User;
   UserActivity: UserActivity;
@@ -574,6 +606,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   requestOwnership?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationRequestOwnershipArgs, 'entityId' | 'userId'>>;
   voteReview?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationVoteReviewArgs, 'vote'>>;
   requestProfilePriority?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationRequestProfilePriorityArgs, 'request'>>;
+  sendSupportRequest?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationSendSupportRequestArgs, 'request'>>;
+  resolveSupportRequest?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationResolveSupportRequestArgs, 'id'>>;
   createUser?: Resolver<ResolversTypes['CreateUserReturn'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'user'>>;
   login?: Resolver<ResolversTypes['CreateUserReturn'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'credentials'>>;
   sendPasswordReset?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationSendPasswordResetArgs, never>>;
@@ -598,6 +632,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getCategory?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<QueryGetCategoryArgs, 'id'>>;
   getEntityOwnershipRequests?: Resolver<Array<Maybe<ResolversTypes['EntityOwnershipRequest']>>, ParentType, ContextType, RequireFields<QueryGetEntityOwnershipRequestsArgs, 'id'>>;
   getPopularSearches?: Resolver<Array<Maybe<ResolversTypes['PopularSearch']>>, ParentType, ContextType>;
+  getSupportRequests?: Resolver<Array<Maybe<ResolversTypes['SupportRequest']>>, ParentType, ContextType>;
   getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
   getUserActivity?: Resolver<ResolversTypes['UserActivity'], ParentType, ContextType, RequireFields<QueryGetUserActivityArgs, 'id'>>;
   getUserEntities?: Resolver<Array<Maybe<ResolversTypes['Entity']>>, ParentType, ContextType, RequireFields<QueryGetUserEntitiesArgs, 'id'>>;
@@ -651,6 +686,15 @@ export type SearchReviewsResponseResolvers<ContextType = any, ParentType extends
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type SupportRequestResolvers<ContextType = any, ParentType extends ResolversParentTypes['SupportRequest'] = ResolversParentTypes['SupportRequest']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  resolved?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   fullName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -680,6 +724,7 @@ export type Resolvers<ContextType = any> = {
   ReviewVote?: ReviewVoteResolvers<ContextType>;
   SearchHistory?: SearchHistoryResolvers<ContextType>;
   SearchReviewsResponse?: SearchReviewsResponseResolvers<ContextType>;
+  SupportRequest?: SupportRequestResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   UserActivity?: UserActivityResolvers<ContextType>;
 };

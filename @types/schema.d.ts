@@ -92,6 +92,8 @@ interface Mutation {
   requestOwnership: Scalars['Boolean'];
   voteReview: Scalars['Boolean'];
   requestProfilePriority: Scalars['Boolean'];
+  sendSupportRequest: Scalars['Boolean'];
+  resolveSupportRequest: Scalars['Boolean'];
   createUser: CreateUserReturn;
   login: CreateUserReturn;
   sendPasswordReset: Scalars['Boolean'];
@@ -131,6 +133,16 @@ interface MutationVoteReviewArgs {
 
 interface MutationRequestProfilePriorityArgs {
   request: ProfilePriorityInput;
+}
+
+
+interface MutationSendSupportRequestArgs {
+  request: SupportRequestInput;
+}
+
+
+interface MutationResolveSupportRequestArgs {
+  id: Scalars['Int'];
 }
 
 
@@ -186,6 +198,7 @@ interface Query {
   getCategory: Category;
   getEntityOwnershipRequests: Array<Maybe<EntityOwnershipRequest>>;
   getPopularSearches: Array<Maybe<PopularSearch>>;
+  getSupportRequests: Array<Maybe<SupportRequest>>;
   getUser: User;
   getUserActivity: UserActivity;
   getUserEntities: Array<Maybe<Entity>>;
@@ -333,6 +346,21 @@ interface SearchReviewsResponse {
   __typename?: 'SearchReviewsResponse';
   reviews: Array<Maybe<Review>>;
   total: Scalars['Int'];
+}
+
+interface SupportRequest {
+  __typename?: 'SupportRequest';
+  id: Scalars['Int'];
+  title: Scalars['String'];
+  body: Scalars['String'];
+  email: Scalars['String'];
+  resolved: Scalars['Boolean'];
+}
+
+interface SupportRequestInput {
+  title: Scalars['String'];
+  body: Scalars['String'];
+  email: Scalars['String'];
 }
 
 interface UpdateUserDetailsInput {

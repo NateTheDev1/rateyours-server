@@ -1,0 +1,23 @@
+type Query {
+	getSupportRequests: [SupportRequest]!
+}
+
+type Mutation {
+	sendSupportRequest(request: SupportRequestInput!): Boolean!
+	resolveSupportRequest(id: Int!): Boolean!
+}
+
+input SupportRequestInput {
+	title: String!
+	body: String!
+	email: String!
+}
+
+type SupportRequest {
+	id: Int!
+	title: String!
+	body: String!
+	email: String!
+	resolved: Boolean!
+	createdAt: String!
+}
